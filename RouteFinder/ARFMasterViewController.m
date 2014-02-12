@@ -10,14 +10,14 @@
 #import "ARFDetailViewController.h"
 
 @interface ARFMasterViewController ()
+
+//Connection delegate
+@property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
 //Table view data
 @property (strong, nonatomic) NSMutableArray *objects; //array of NSDictionary
-//Connection
-@property (strong, nonatomic) NSURLConnection *connection;
-@property (strong, nonatomic) NSMutableData *responseData;
-@property (nonatomic) RequestType currentRequest;
 //Outlets
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+
 @end
 
 @implementation ARFMasterViewController
@@ -25,51 +25,6 @@
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";
 NSString *const KEY_ID = @"id";
-
-#pragma mark - UIViewController Lifecycle
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
-                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
-}
-
-
-#define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
-
-- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url delegate:(id)delegate {
-    
-    self.responseData = [NSMutableData dataWithCapacity:0];
-    
-    NSDictionary *jsonParams = @{@"params": params};
-    NSError *error;
-    NSData *postParams = [NSJSONSerialization dataWithJSONObject:jsonParams options:0 error:&error];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:60.0];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:postParams];
-    [request setValue:[NSString stringWithFormat:@"%d", [postParams length]] forHTTPHeaderField:@"Content-Length"];
-    //Authentication
-    [request setValue:@"Basic V0tENE43WU1BMXVpTThWOkR0ZFR0ek1MUWxBMGhrMkMxWWk1cEx5VklsQVE2OA==" forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"staging" forHTTPHeaderField:@"X-AppGlu-Environment"];
-    //JSON
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate];
-}
-
-- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
-    [self postRequest:params toURL:url delegate:self];
-}
-
-- (void)findRoutesByStopName:(NSString *)param {
-    self.currentRequest = findRoutesByStopName;
-    [self postRequest:@{@"stopName": param}
-                toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
-}
 
 - (void)addRoutesToTableView:(NSArray *)routes {
     [self.objects addObjectsFromArray:routes];
@@ -92,7 +47,8 @@ NSString *const KEY_ID = @"id";
         NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
         //NSLog(@"Search touched: %@", param);
     
-        [self findRoutesByStopName:param];
+        [self.postRequestDelegate findRoutesByStopName:param delegate:self];
+        //TODO Animate something...
     }
 }
 
@@ -106,49 +62,12 @@ NSString *const KEY_ID = @"id";
 }
 
 #pragma mark - Protocols
-#pragma mark NSURLConnectionDataDelegate implementation
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"Received %d bytes", [self.responseData length]);
-//    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
-    
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
-    NSArray *rows = [json objectForKey:@"rows"];
-    
-    if (self.currentRequest == findRoutesByStopName) {
-        [self addRoutesToTableView:rows];
-    } else if (self.currentRequest == findDeparturesByRouteId) {
-        
-    }
-    
-    self.connection = nil;
-    self.responseData = nil;
-}
+#pragma mark ARFPostRequestDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [self.responseData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [self.responseData appendData:data];
-}
-
-#pragma mark NSURLConnectionDelegate implementation
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Connection failed! Error - %@ - %@",
-          [error localizedDescription],
-          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
-
-    NSString *msg = [NSString stringWithFormat:@"Connection failed!\nError: %@\nPlease check your connection settings", [error localizedDescription]];
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                 message:msg
-                                delegate:nil
-                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                       otherButtonTitles:nil] show];
-    self.connection = nil;
-    self.responseData = nil;
+- (void)requestDidComplete:(NSArray *)rows {
+//    NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+    [self addRoutesToTableView:rows];
 }
 
 #pragma mark Table View
@@ -175,6 +94,17 @@ NSString *const KEY_ID = @"id";
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+#pragma mark - UIViewController Lifecycle
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.postRequestDelegate = [[ARFPostRequest alloc] init];
+    
+    //Test data
+//    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
+//                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 #pragma mark - Segues

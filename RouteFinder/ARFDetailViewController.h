@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ARFPostRequest.h"
 
-@interface ARFDetailViewController : UIViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;

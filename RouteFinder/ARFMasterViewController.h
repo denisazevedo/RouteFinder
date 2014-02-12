@@ -7,13 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ARFPostRequest.h"
 
-typedef enum {
-    findRoutesByStopName,
-    findDeparturesByRouteId
-} RequestType;
-
-@interface ARFMasterViewController : UITableViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface ARFMasterViewController : UITableViewController <ARFPostRequestDelegate>
 
 extern NSString *const KEY_SHORT_NAME;
 extern NSString *const KEY_LONG_NAME;

@@ -122,9 +122,9 @@
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
 				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,
+				6A787EE218AB11F100437194 /* ARFDetailViewController.m */,
 				6A61123018AC027B00DB77DB /* ARFPostRequest.h */,
 				6A61123118AC027B00DB77DB /* ARFPostRequest.m */,
-				6A787EE218AB11F100437194 /* ARFDetailViewController.m */,
 				6A787EE418AB11F100437194 /* Images.xcassets */,
 				6A787ED018AB11F100437194 /* Supporting Files */,
 			);
