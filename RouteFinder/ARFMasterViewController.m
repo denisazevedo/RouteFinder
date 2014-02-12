@@ -34,31 +34,41 @@ NSString *const KEY_LONG_NAME = @"longName";
 }
 
 
-#define URL @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
-#define AUTH @"Basic V0tENE43WU1BMXVpTThWOkR0ZFR0ek1MUWxBMGhrMkMxWWk1cEx5VklsQVE2OA=="
+#define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
+#define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
 
-- (void)findRoutesByStopName:(NSString *)param { //param: stopName
+- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
     
     self.responseData = [NSMutableData dataWithCapacity:0];
     
-    NSDictionary *params = @{@"params": @{@"stopName": param}};
+    NSDictionary *jsonParams = @{@"params": params};
     NSError *error;
-    NSData *postParams = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
+    NSData *postParams = [NSJSONSerialization dataWithJSONObject:jsonParams options:0 error:&error];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URL]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:postParams];
     [request setValue:[NSString stringWithFormat:@"%d", [postParams length]] forHTTPHeaderField:@"Content-Length"];
     //Authentication
-    [request setValue:AUTH forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"Basic V0tENE43WU1BMXVpTThWOkR0ZFR0ek1MUWxBMGhrMkMxWWk1cEx5VklsQVE2OA==" forHTTPHeaderField:@"Authorization"];
     [request setValue:@"staging" forHTTPHeaderField:@"X-AppGlu-Environment"];
     //JSON
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+- (void)findRoutesByStopName:(NSString *)param {
+    [self postRequest:@{@"stopName": param}
+                toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
+}
+
+- (void)findDeparturesByRouteId:(NSNumber *)param {
+    [self postRequest:@{@"params": @{@"routeId": param}}
+                toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
 }
 
 - (void)addRouteToTable:(NSDictionary *)route {
