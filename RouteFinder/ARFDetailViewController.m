@@ -17,10 +17,10 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setDetailRoute:(id)newDetailRoute
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+    if (_detailRoute != newDetailRoute) {
+        _detailRoute = newDetailRoute;
         
         // Update the view.
         [self configureView];
@@ -29,10 +29,10 @@
 
 - (void)configureView
 {
-    if (self.detailItem) {
+    if (self.detailRoute) {
         NSString *label = [NSString stringWithFormat:@"%@ - %@",
-                           [self.detailItem objectForKey:KEY_SHORT_NAME],
-                           [self.detailItem objectForKey:KEY_LONG_NAME]];
+                           [self.detailRoute objectForKey:KEY_SHORT_NAME],
+                           [self.detailRoute objectForKey:KEY_LONG_NAME]];
         self.detailDescriptionLabel.text = label;
     }
 }

@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    findRoutesByStopName,
+    findDeparturesByRouteId
+} RequestType;
+
 @interface ARFMasterViewController : UITableViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 extern NSString *const KEY_SHORT_NAME;
 extern NSString *const KEY_LONG_NAME;
+extern NSString *const KEY_ID;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface ARFDetailViewController : UIViewController
 
-@property (strong, nonatomic) NSDictionary *detailItem;
+@property (strong, nonatomic) NSDictionary *detailRoute;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

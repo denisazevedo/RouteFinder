@@ -15,6 +15,7 @@
 //Connection
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *responseData;
+@property (nonatomic) RequestType currentRequest;
 //Outlets
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @end
@@ -23,21 +24,21 @@
 
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";
+NSString *const KEY_ID = @"id";
 
 #pragma mark - UIViewController Lifecycle
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addRouteToTable:@{KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"}];
-    [self addRouteToTable:@{KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}];
+    //[self addRoutesToTableView:@[@{KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
+    //                             @{KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 
 #define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
 #define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
 
-- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
+- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url delegate:(id)delegate {
     
     self.responseData = [NSMutableData dataWithCapacity:0];
     
@@ -58,25 +59,26 @@ NSString *const KEY_LONG_NAME = @"longName";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate];
+}
+
+- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
+    [self postRequest:params toURL:url delegate:self];
 }
 
 - (void)findRoutesByStopName:(NSString *)param {
+    self.currentRequest = findRoutesByStopName;
     [self postRequest:@{@"stopName": param}
                 toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
 }
 
 - (void)findDeparturesByRouteId:(NSNumber *)param {
+    self.currentRequest = findDeparturesByRouteId;
     [self postRequest:@{@"params": @{@"routeId": param}}
                 toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
 }
 
-- (void)addRouteToTable:(NSDictionary *)route {
-    [self.objects addObject:route];
-    [self.tableView reloadData];
-}
-
-- (void)addRoutesToTable:(NSArray *)routes {
+- (void)addRoutesToTableView:(NSArray *)routes {
     [self.objects addObjectsFromArray:routes];
     [self.tableView reloadData];
 }
@@ -121,8 +123,11 @@ NSString *const KEY_LONG_NAME = @"longName";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
     NSArray *rows = [json objectForKey:@"rows"];
     
-    //for (NSDictionary *row in rows) { [self addRouteToTable:row]; }
-    [self addRoutesToTable:rows];
+    if (self.currentRequest == findRoutesByStopName) {
+        [self addRoutesToTableView:rows];
+    } else if (self.currentRequest == findDeparturesByRouteId) {
+        
+    }
     
     self.connection = nil;
     self.responseData = nil;
@@ -171,7 +176,6 @@ NSString *const KEY_LONG_NAME = @"longName";
     cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
     cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
     return cell;
 }
 
@@ -185,8 +189,12 @@ NSString *const KEY_LONG_NAME = @"longName";
 
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDictionary *object = self.objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+        NSDictionary *route = self.objects[indexPath.row];
+        
+        id routeId = [route objectForKey:KEY_ID];
+        [self findDeparturesByRouteId:routeId];
+        
+        [[segue destinationViewController] setDetailRoute:route];
     }
 }
 
