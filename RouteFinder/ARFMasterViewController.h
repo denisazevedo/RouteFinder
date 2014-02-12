@@ -10,4 +10,7 @@
 
 @interface ARFMasterViewController : UITableViewController
 
+extern NSString *const KEY_SHORT_NAME;
+extern NSString *const KEY_LONG_NAME;
+
 @end

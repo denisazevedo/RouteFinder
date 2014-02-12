@@ -7,6 +7,7 @@
 //
 
 #import "ARFDetailViewController.h"
+#import "ARFMasterViewController.h"
 
 @interface ARFDetailViewController ()
 - (void)configureView;
@@ -29,7 +30,10 @@
 - (void)configureView
 {
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        NSString *label = [NSString stringWithFormat:@"%@ - %@",
+                           [self.detailItem objectForKey:KEY_SHORT_NAME],
+                           [self.detailItem objectForKey:KEY_LONG_NAME]];
+        self.detailDescriptionLabel.text = label;
     }
 }
 

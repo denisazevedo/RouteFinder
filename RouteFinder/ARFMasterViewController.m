@@ -10,16 +10,45 @@
 
 #import "ARFDetailViewController.h"
 
-@interface ARFMasterViewController () {
-    NSMutableArray *_objects;
-}
+@interface ARFMasterViewController ()
+@property (strong, nonatomic) NSMutableArray *objects;
+@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @end
 
 @implementation ARFMasterViewController
 
+NSString *const KEY_SHORT_NAME = @"shortName";
+NSString *const KEY_LONG_NAME = @"longName";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self addRouteToTable:@{KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"}];
+    [self addRouteToTable:@{KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}];
+}
+
+- (void)addRouteToTable:(id)route {
+    [self.objects addObject:route];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Actions
+
+- (IBAction)search:(UIButton *)sender {
+    if (self.searchTextField.text) {
+        NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
+        NSLog(@"Search touched: %@", param);
+    }
+}
+
+#pragma mark - Properties
+
+- (NSMutableArray *)objects {
+    if (!_objects) {
+        _objects = [[NSMutableArray alloc] init];
+    }
+    return _objects;
 }
 
 #pragma mark - Table View
@@ -31,15 +60,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return self.objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    NSDictionary *object = self.objects[indexPath.row];
+    cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
+    cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
     return cell;
 }
 
@@ -52,7 +82,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+        [self.objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -63,7 +93,7 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
+        NSDictionary *object = self.objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
     }
 }
