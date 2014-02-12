@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARFMasterViewController : UITableViewController
+@interface ARFMasterViewController : UITableViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 extern NSString *const KEY_SHORT_NAME;
 extern NSString *const KEY_LONG_NAME;

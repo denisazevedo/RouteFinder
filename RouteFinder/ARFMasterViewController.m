@@ -7,11 +7,15 @@
 //
 
 #import "ARFMasterViewController.h"
-
 #import "ARFDetailViewController.h"
 
 @interface ARFMasterViewController ()
-@property (strong, nonatomic) NSMutableArray *objects;
+//Table view data
+@property (strong, nonatomic) NSMutableArray *objects; //array of NSDictionary
+//Connection
+@property (strong, nonatomic) NSURLConnection *connection;
+@property (strong, nonatomic) NSMutableData *responseData;
+//Outlets
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @end
 
@@ -20,6 +24,7 @@
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";
 
+#pragma mark - UIViewController Lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,17 +33,61 @@ NSString *const KEY_LONG_NAME = @"longName";
     [self addRouteToTable:@{KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}];
 }
 
-- (void)addRouteToTable:(id)route {
+
+#define URL @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
+#define AUTH @"Basic V0tENE43WU1BMXVpTThWOkR0ZFR0ek1MUWxBMGhrMkMxWWk1cEx5VklsQVE2OA=="
+
+- (void)findRoutesByStopName:(NSString *)param { //param: stopName
+    
+    self.responseData = [NSMutableData dataWithCapacity:0];
+    
+    NSDictionary *params = @{@"params": @{@"stopName": param}};
+    NSError *error;
+    NSData *postParams = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URL]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postParams];
+    [request setValue:[NSString stringWithFormat:@"%d", [postParams length]] forHTTPHeaderField:@"Content-Length"];
+    //Authentication
+    [request setValue:AUTH forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"staging" forHTTPHeaderField:@"X-AppGlu-Environment"];
+    //JSON
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+- (void)addRouteToTable:(NSDictionary *)route {
     [self.objects addObject:route];
     [self.tableView reloadData];
 }
 
-#pragma mark - Actions
+- (void)addRoutesToTable:(NSArray *)routes {
+    [self.objects addObjectsFromArray:routes];
+    [self.tableView reloadData];
+}
+
+- (void)clearTableView {
+    //Clear the table view
+    [self.objects removeAllObjects];
+    [self.tableView reloadData];
+}
+
+#pragma mark - IBActions
 
 - (IBAction)search:(UIButton *)sender {
+    
     if (self.searchTextField.text) {
+        [self clearTableView];
+        
         NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
-        NSLog(@"Search touched: %@", param);
+        //NSLog(@"Search touched: %@", param);
+    
+        [self findRoutesByStopName:param];
     }
 }
 
@@ -51,46 +100,79 @@ NSString *const KEY_LONG_NAME = @"longName";
     return _objects;
 }
 
-#pragma mark - Table View
+#pragma mark - Protocols
+#pragma mark NSURLConnectionDataDelegate implementation
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"Received %d bytes", [self.responseData length]);
+    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
+    
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
+    NSArray *rows = [json objectForKey:@"rows"];
+    
+    //for (NSDictionary *row in rows) { [self addRouteToTable:row]; }
+    [self addRoutesToTable:rows];
+    
+    self.connection = nil;
+    self.responseData = nil;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    [self.responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+#pragma mark NSURLConnectionDelegate implementation
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"Connection failed! Error - %@ - %@",
+          [error localizedDescription],
+          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+
+    NSString *msg = [NSString stringWithFormat:@"Connection failed!\nError: %@\nPlease check your connection settings", [error localizedDescription]];
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
+                                 message:msg
+                                delegate:nil
+                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                       otherButtonTitles:nil] show];
+    self.connection = nil;
+    self.responseData = nil;
+}
+
+#pragma mark Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.objects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     NSDictionary *object = self.objects[indexPath.row];
+    
     cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
     cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
-}
+#pragma mark - Segues
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDictionary *object = self.objects[indexPath.row];
