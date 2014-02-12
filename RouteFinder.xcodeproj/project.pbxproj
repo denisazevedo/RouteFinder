@@ -115,8 +115,6 @@
 		6A787ECF18AB11F100437194 /* RouteFinder */ = {
 			isa = PBXGroup;
 			children = (
-				6A787ED818AB11F100437194 /* ARFAppDelegate.h */,
-				6A787ED918AB11F100437194 /* ARFAppDelegate.m */,
 				6A787EDB18AB11F100437194 /* Main.storyboard */,
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
@@ -131,6 +129,8 @@
 		6A787ED018AB11F100437194 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6A787ED818AB11F100437194 /* ARFAppDelegate.h */,
+				6A787ED918AB11F100437194 /* ARFAppDelegate.m */,
 				6A787ED118AB11F100437194 /* RouteFinder-Info.plist */,
 				6A787ED218AB11F100437194 /* InfoPlist.strings */,
 				6A787ED518AB11F100437194 /* main.m */,
@@ -467,6 +467,7 @@
 				6A787EFD18AB11F100437194 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A787EFE18AB11F100437194 /* Build configuration list for PBXNativeTarget "RouteFinderTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +476,7 @@
 				6A787F0018AB11F100437194 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
