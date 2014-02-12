@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123118AC027B00DB77DB /* ARFPostRequest.m */; };
 		6A787ECA18AB11F100437194 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787EC918AB11F100437194 /* Foundation.framework */; };
 		6A787ECC18AB11F100437194 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787ECB18AB11F100437194 /* CoreGraphics.framework */; };
 		6A787ECE18AB11F100437194 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787ECD18AB11F100437194 /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A61123018AC027B00DB77DB /* ARFPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFPostRequest.h; sourceTree = "<group>"; };
+		6A61123118AC027B00DB77DB /* ARFPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFPostRequest.m; sourceTree = "<group>"; };
 		6A787EC618AB11F100437194 /* RouteFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A787EC918AB11F100437194 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6A787ECB18AB11F100437194 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
 				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,
+				6A61123018AC027B00DB77DB /* ARFPostRequest.h */,
+				6A61123118AC027B00DB77DB /* ARFPostRequest.m */,
 				6A787EE218AB11F100437194 /* ARFDetailViewController.m */,
 				6A787EE418AB11F100437194 /* Images.xcassets */,
 				6A787ED018AB11F100437194 /* Supporting Files */,
@@ -258,6 +263,7 @@
 				6A787EDA18AB11F100437194 /* ARFAppDelegate.m in Sources */,
 				6A787ED618AB11F100437194 /* main.m in Sources */,
 				6A787EE018AB11F100437194 /* ARFMasterViewController.m in Sources */,
+				6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */,
 				6A787EE318AB11F100437194 /* ARFDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

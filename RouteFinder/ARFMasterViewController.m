@@ -30,13 +30,12 @@ NSString *const KEY_ID = @"id";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //[self addRoutesToTableView:@[@{KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
-    //                             @{KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
+    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
+                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 
 #define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
-#define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
 
 - (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url delegate:(id)delegate {
     
@@ -70,12 +69,6 @@ NSString *const KEY_ID = @"id";
     self.currentRequest = findRoutesByStopName;
     [self postRequest:@{@"stopName": param}
                 toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
-}
-
-- (void)findDeparturesByRouteId:(NSNumber *)param {
-    self.currentRequest = findDeparturesByRouteId;
-    [self postRequest:@{@"params": @{@"routeId": param}}
-                toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
 }
 
 - (void)addRoutesToTableView:(NSArray *)routes {
@@ -117,7 +110,7 @@ NSString *const KEY_ID = @"id";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"Received %d bytes", [self.responseData length]);
-    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
+//    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
     
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
@@ -174,7 +167,8 @@ NSString *const KEY_ID = @"id";
     NSDictionary *object = self.objects[indexPath.row];
     
     cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
-    cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
+    //cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@) %@", [object objectForKey:KEY_ID], [object objectForKey:KEY_LONG_NAME]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
@@ -190,9 +184,6 @@ NSString *const KEY_ID = @"id";
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDictionary *route = self.objects[indexPath.row];
-        
-        id routeId = [route objectForKey:KEY_ID];
-        [self findDeparturesByRouteId:routeId];
         
         [[segue destinationViewController] setDetailRoute:route];
     }

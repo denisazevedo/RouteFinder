@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARFDetailViewController : UIViewController
+@interface ARFDetailViewController : UIViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
-
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+
 @end
