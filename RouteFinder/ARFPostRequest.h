@@ -10,9 +10,7 @@
 
 @protocol ARFPostRequestDelegate <NSObject>
 - (void)requestDidComplete:(NSArray *)rows;
-//TODO implement these methods:
-//- (void)requestDidNotComplete;
-//- (void)requestDidFail:(NSError *)error;
+- (void)requestDidFail:(NSError *)error;
 @end
 
 @interface ARFPostRequest : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>

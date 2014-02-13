@@ -134,6 +134,11 @@
                                delegate:nil
                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
                       otherButtonTitles:nil] show];
+    
+    if ([self.delegate respondsToSelector:@selector(requestDidFail:)]) {
+        [self.delegate requestDidFail:error];
+    }
+    
     self.connection = nil;
     self.responseData = nil;
 }

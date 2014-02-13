@@ -155,6 +155,10 @@ int const SEGMENT_TIMETABLE = 1;
     [self.loadingActivity stopAnimating];
 }
 
+- (void)requestDidFail:(NSError *)error {
+    [self.loadingActivity stopAnimating];
+}
+
 #pragma mark - UIViewController Lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {

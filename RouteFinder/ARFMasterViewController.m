@@ -82,9 +82,11 @@ NSString *const KEY_TIME = @"time";
     [self addRoutesToTableView:rows];
 }
 
-//- (void)requestDidComplete:(NSArray *)rows { //TODO with error
-//    [self.loadingIndicator stopAnimating];
-//}
+- (void)requestDidFail:(NSError *)error {
+    [self.loadingIndicator stopAnimating];
+    self.footnoteLabel.text = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+    self.tableView.tableFooterView.hidden = NO;
+}
 
 #pragma mark Table View
 
