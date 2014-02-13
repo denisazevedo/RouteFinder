@@ -12,11 +12,6 @@
 @interface ARFStopsDatasSource : NSObject <UITableViewDataSource>
 
 //Designated initializer
-//- (instancetype)initWithObjects:(NSMutableArray *)objects;
-
-//@property (strong, nonatomic) NSMutableArray *stops;
-
-//Designated initializer
 - (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate;
 
 @end

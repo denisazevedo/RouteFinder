@@ -10,20 +10,10 @@
 #import "ARFDetailViewController.h"
 
 @interface ARFStopsDatasSource ()
-//@property (strong, nonatomic) NSMutableArray *objects;
 @property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
 @end
 
 @implementation ARFStopsDatasSource
-
-//Designated initializer
-//- (instancetype)initWithObjects:(NSMutableArray *)objects {
-//     self = [self init]; //super's designated initializer
-//     if (self) {
-//         self.objects = objects;
-//     }
-//     return self;
-//}
 
 //Designated initializer
 - (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
-//#import "ARFTimetableTableDatasSource.h"
 
 @protocol ARFTableDatasourceDelegate <NSObject>
 @required
@@ -19,15 +18,8 @@
 
 
 @interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
-//@interface ARFDetailViewController : UITableViewController <ARFPostRequestDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
-
-//@property (readonly, strong, nonatomic) NSMutableArray *weekdayTimes; //Array of NSString
-//@property (readonly, strong, nonatomic) NSMutableArray *saturdayTimes; //Array of NSString
-//@property (readonly, strong, nonatomic) NSMutableArray *sundayTimes; //Array of NSString
-
-//- (NSMutableArray *)arrayInSection:(NSInteger)section;
 
 enum {
     //Timetable
