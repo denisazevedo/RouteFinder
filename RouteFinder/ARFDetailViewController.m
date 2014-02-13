@@ -8,8 +8,8 @@
 
 #import "ARFDetailViewController.h"
 #import "ARFMasterViewController.h"
-#import "ARFStopsTableDatasSource.h"
-#import "ARFTimetableTableDatasSource.h"
+#import "ARFStopsDatasSource.h"
+#import "ARFTimetableDataSource.h"
 
 @interface ARFDetailViewController ()
 
@@ -183,8 +183,8 @@ int const SEGMENT_TIMETABLE = 1;
 //    if (self.detailRoute) {
 //    }
     
-    self.stopsDatasource = [[ARFStopsTableDatasSource alloc] initWithDelegate:self];
-    self.timetableDatasource = [[ARFTimetableTableDatasSource alloc] initWithDelegate:self];
+    self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
+    self.timetableDatasource = [[ARFTimetableDataSource alloc] initWithDelegate:self];
     
     self.tableView.dataSource = self.stopsDatasource;
 

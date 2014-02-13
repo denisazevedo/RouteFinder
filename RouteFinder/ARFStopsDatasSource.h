@@ -1,5 +1,5 @@
 //
-//  ARFTimetableTableDatasSource.h
+//  ARFStopsTableDatasSource.h
 //  RouteFinder
 //
 //  Created by Denis C de Azevedo on 13/02/14.
@@ -9,7 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ARFDetailViewController.h"
 
-@interface ARFTimetableTableDatasSource : NSObject <UITableViewDataSource>
+@interface ARFStopsDatasSource : NSObject <UITableViewDataSource>
+
+//Designated initializer
+//- (instancetype)initWithObjects:(NSMutableArray *)objects;
+
+//@property (strong, nonatomic) NSMutableArray *stops;
 
 //Designated initializer
 - (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate;

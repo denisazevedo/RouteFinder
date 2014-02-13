@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Denis C de Azevedo. All rights reserved.
 //
 
-#import "ARFTimetableTableDatasSource.h"
+#import "ARFTimetableDataSource.h"
 #import "ARFDetailViewController.h"
 
-@interface ARFTimetableTableDatasSource ()
+@interface ARFTimetableDataSource ()
 @property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
 @end
 
-@implementation ARFTimetableTableDatasSource
+@implementation ARFTimetableDataSource
 
 //Designated initializer
 - (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {

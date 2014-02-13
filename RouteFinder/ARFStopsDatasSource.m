@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Denis C de Azevedo. All rights reserved.
 //
 
-#import "ARFStopsTableDatasSource.h"
+#import "ARFStopsDatasSource.h"
 #import "ARFDetailViewController.h"
 
-@interface ARFStopsTableDatasSource ()
+@interface ARFStopsDatasSource ()
 //@property (strong, nonatomic) NSMutableArray *objects;
 @property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
 @end
 
-@implementation ARFStopsTableDatasSource
+@implementation ARFStopsDatasSource
 
 //Designated initializer
 //- (instancetype)initWithObjects:(NSMutableArray *)objects {
