@@ -8,11 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
+#import "ARFTimetableTableDatasSource.h"
 
-//@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate>
-@interface ARFDetailViewController : UITableViewController <ARFPostRequestDelegate>
+@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTimetableDatasourceDelegate>
+//@interface ARFDetailViewController : UITableViewController <ARFPostRequestDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+
+//@property (readonly, strong, nonatomic) NSMutableArray *weekdayTimes; //Array of NSString
+//@property (readonly, strong, nonatomic) NSMutableArray *saturdayTimes; //Array of NSString
+//@property (readonly, strong, nonatomic) NSMutableArray *sundayTimes; //Array of NSString
+
+//- (NSMutableArray *)arrayInSection:(NSInteger)section;
+
+enum {
+    SECTION_WEEKDAYS,
+    SECTION_SATURDAYS,
+    SECTION_SUNDAYS,
+};
+//typedef int SectionType;
+
+extern NSString *const NO_TIME_AVAILABLE_MSG;
 
 @end

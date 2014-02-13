@@ -25,6 +25,7 @@
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";
 NSString *const KEY_ID = @"id";
+NSString *const KEY_NAME = @"name";
 NSString *const KEY_CALENDAR = @"calendar";
 NSString *const KEY_TIME = @"time";
 
@@ -47,8 +48,6 @@ NSString *const KEY_TIME = @"time";
         [self clearTableView];
         
         NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
-        //NSLog(@"Search touched: %@", param);
-    
         [self.postRequestDelegate findRoutesByStopName:param delegate:self];
         //TODO Animate something...
     }
@@ -88,16 +87,9 @@ NSString *const KEY_TIME = @"time";
     NSDictionary *object = self.objects[indexPath.row];
     
     cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
-    //cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@) %@", [object objectForKey:KEY_ID], [object objectForKey:KEY_LONG_NAME]];
-    //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
     return cell;
 }
-/*
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-*/
 
 #pragma mark - UIViewController Lifecycle
 - (void)viewDidLoad {
@@ -106,8 +98,8 @@ NSString *const KEY_TIME = @"time";
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
     
     //Test data
-    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
-                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
+//    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
+//                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 #pragma mark - Segues

@@ -20,8 +20,9 @@
 
 @implementation ARFPostRequest
 
+#define URL_ROUTES_BY_STOP_NAME @"ttps://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
+#define URL_STOPS_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findStopsByRouteId/run"
 #define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
-#define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
 
 /*
 //Designated initializer
@@ -40,6 +41,12 @@
                 toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
 }
 
+- (void)findStopsByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate {
+    self.delegate = delegate;
+    [self postRequest:@{@"routeId": param}
+                toURL:[NSURL URLWithString:URL_STOPS_BY_ROUTE_ID]];
+}
+
 - (void)findDeparturesByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate {
     self.delegate = delegate;
     [self postRequest:@{@"routeId": param}
@@ -52,7 +59,6 @@
  toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
  }
  */
-
 
 //- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url delegate:(id)delegate {
 - (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
@@ -93,7 +99,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     NSLog(@"%s Received %d bytes", __PRETTY_FUNCTION__, [self.responseData length]);
-    //    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
+//    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
     
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];

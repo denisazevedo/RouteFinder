@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123118AC027B00DB77DB /* ARFPostRequest.m */; };
+		6A61123518AC856600DB77DB /* ARFStopsTableDatasSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123418AC856600DB77DB /* ARFStopsTableDatasSource.m */; };
+		6A61123818AC962A00DB77DB /* ARFTimetableTableDatasSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123718AC962A00DB77DB /* ARFTimetableTableDatasSource.m */; };
 		6A787ECA18AB11F100437194 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787EC918AB11F100437194 /* Foundation.framework */; };
 		6A787ECC18AB11F100437194 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787ECB18AB11F100437194 /* CoreGraphics.framework */; };
 		6A787ECE18AB11F100437194 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787ECD18AB11F100437194 /* UIKit.framework */; };
@@ -38,6 +40,10 @@
 /* Begin PBXFileReference section */
 		6A61123018AC027B00DB77DB /* ARFPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFPostRequest.h; sourceTree = "<group>"; };
 		6A61123118AC027B00DB77DB /* ARFPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFPostRequest.m; sourceTree = "<group>"; };
+		6A61123318AC856600DB77DB /* ARFStopsTableDatasSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFStopsTableDatasSource.h; sourceTree = "<group>"; };
+		6A61123418AC856600DB77DB /* ARFStopsTableDatasSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFStopsTableDatasSource.m; sourceTree = "<group>"; };
+		6A61123618AC962A00DB77DB /* ARFTimetableTableDatasSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFTimetableTableDatasSource.h; sourceTree = "<group>"; };
+		6A61123718AC962A00DB77DB /* ARFTimetableTableDatasSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFTimetableTableDatasSource.m; sourceTree = "<group>"; };
 		6A787EC618AB11F100437194 /* RouteFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A787EC918AB11F100437194 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6A787ECB18AB11F100437194 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -119,6 +125,10 @@
 			isa = PBXGroup;
 			children = (
 				6A787EDB18AB11F100437194 /* Main.storyboard */,
+				6A61123318AC856600DB77DB /* ARFStopsTableDatasSource.h */,
+				6A61123418AC856600DB77DB /* ARFStopsTableDatasSource.m */,
+				6A61123618AC962A00DB77DB /* ARFTimetableTableDatasSource.h */,
+				6A61123718AC962A00DB77DB /* ARFTimetableTableDatasSource.m */,
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
 				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,
@@ -261,7 +271,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A787EDA18AB11F100437194 /* ARFAppDelegate.m in Sources */,
+				6A61123518AC856600DB77DB /* ARFStopsTableDatasSource.m in Sources */,
 				6A787ED618AB11F100437194 /* main.m in Sources */,
+				6A61123818AC962A00DB77DB /* ARFTimetableTableDatasSource.m in Sources */,
 				6A787EE018AB11F100437194 /* ARFMasterViewController.m in Sources */,
 				6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */,
 				6A787EE318AB11F100437194 /* ARFDetailViewController.m in Sources */,

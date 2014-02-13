@@ -26,6 +26,7 @@
 */
 
 - (void)findRoutesByStopName:(NSString *)param delegate:(id<ARFPostRequestDelegate>)delegate;
+- (void)findStopsByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate;
 - (void)findDeparturesByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate;
 
 @end
