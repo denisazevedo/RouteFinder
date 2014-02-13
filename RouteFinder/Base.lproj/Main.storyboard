@@ -37,6 +37,10 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VQ1-5L-EBf">
+                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-dP-leW">
                                     <rect key="frame" x="252" y="7" width="48" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -50,17 +54,32 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="VQ1-5L-EBf" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="12" id="4FI-QF-9se"/>
                                 <constraint firstItem="kxj-E4-Ic7" firstAttribute="leading" secondItem="j1W-QK-ZDx" secondAttribute="leading" constant="20" id="6ng-jq-W5r"/>
                                 <constraint firstItem="kxj-E4-Ic7" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="7" id="8N0-XL-uzR"/>
                                 <constraint firstItem="MhG-dP-leW" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="7" id="ENV-3Z-hKn"/>
+                                <constraint firstItem="kxj-E4-Ic7" firstAttribute="centerX" secondItem="VQ1-5L-EBf" secondAttribute="centerX" constant="-28" id="Ljh-Sw-VrX"/>
                                 <constraint firstAttribute="trailing" secondItem="MhG-dP-leW" secondAttribute="trailing" constant="20" id="Ywv-NL-Sg5"/>
                                 <constraint firstItem="MhG-dP-leW" firstAttribute="leading" secondItem="kxj-E4-Ic7" secondAttribute="trailing" constant="8" id="gWq-KD-ZrQ"/>
                             </constraints>
                         </view>
-                        <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="IJk-Vc-SIk">
-                            <rect key="frame" x="0.0" y="174" width="320" height="20"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="vzp-H1-geU">
+                            <rect key="frame" x="0.0" y="174" width="320" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X routes found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiA-qu-pDW">
+                                    <rect key="frame" x="119" y="4" width="82" height="15"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="FiA-qu-pDW" secondAttribute="centerX" id="CdD-cL-R2P"/>
+                                <constraint firstAttribute="centerY" secondItem="FiA-qu-pDW" secondAttribute="centerY" constant="0.5" id="LL5-Qj-OmG"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="2pz-XF-uhl" detailTextLabel="1YN-29-c4J" style="IBUITableViewCellStyleSubtitle" id="m0d-ak-lc9">
                                 <rect key="frame" x="0.0" y="130" width="320" height="44"/>
@@ -99,7 +118,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="tQt-TN-PWz"/>
                     <connections>
-                        <outlet property="loadingIndicator" destination="IJk-Vc-SIk" id="qMY-2n-kZ1"/>
+                        <outlet property="footnoteLabel" destination="FiA-qu-pDW" id="Rba-bV-E0f"/>
+                        <outlet property="loadingIndicator" destination="VQ1-5L-EBf" id="GMz-Rl-CIg"/>
                         <outlet property="searchTextField" destination="kxj-E4-Ic7" id="QOL-rh-sw5"/>
                         <outlet property="tableView" destination="mLL-gJ-YKr" id="Hje-WY-Z6y"/>
                     </connections>

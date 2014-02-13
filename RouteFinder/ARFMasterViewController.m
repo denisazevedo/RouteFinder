@@ -18,6 +18,7 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *footnoteLabel;
 
 @end
 
@@ -33,21 +34,29 @@ NSString *const KEY_TIME = @"time";
 - (void)addRoutesToTableView:(NSArray *)routes {
     [self.objects addObjectsFromArray:routes];
     [self.tableView reloadData];
+    [self refreshTableFooter:YES];
+}
+
+- (void)refreshTableFooter:(BOOL)isVisible {
+    if (isVisible) {
+        self.footnoteLabel.text = [NSString stringWithFormat:@"%d row(s) found", [self.objects count]];
+    }
+    self.tableView.tableFooterView.hidden = !isVisible;
 }
 
 - (void)clearTableView {
     //Clear the table view
     [self.objects removeAllObjects];
     [self.tableView reloadData];
+    [self refreshTableFooter:NO];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)search:(UIButton *)sender {
-    
-    if (self.searchTextField.text) {
-        [self clearTableView];
-        
+
+    [self clearTableView];
+    if (self.searchTextField.text.length > 0) {
         NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
         [self.postRequestDelegate findRoutesByStopName:param delegate:self];
         [self.loadingIndicator startAnimating];
@@ -96,6 +105,7 @@ NSString *const KEY_TIME = @"time";
 #pragma mark - UIViewController Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self refreshTableFooter:NO];
     
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
     
