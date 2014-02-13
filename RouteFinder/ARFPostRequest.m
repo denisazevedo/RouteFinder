@@ -20,7 +20,7 @@
 
 @implementation ARFPostRequest
 
-#define URL_ROUTES_BY_STOP_NAME @"ttps://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
+#define URL_ROUTES_BY_STOP_NAME @"https://dashboard.appglu.com/v1/queries/findRoutesByStopName/run"
 #define URL_STOPS_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findStopsByRouteId/run"
 #define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
 

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *objects; //array of NSDictionary
 //Outlets
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 @end
 
@@ -49,7 +50,7 @@ NSString *const KEY_TIME = @"time";
         
         NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
         [self.postRequestDelegate findRoutesByStopName:param delegate:self];
-        //TODO Animate something...
+        [self.loadingIndicator startAnimating];
     }
 }
 
@@ -68,6 +69,7 @@ NSString *const KEY_TIME = @"time";
 
 - (void)requestDidComplete:(NSArray *)rows {
 //    NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+    [self.loadingIndicator stopAnimating];
     [self addRoutesToTableView:rows];
 }
 
@@ -86,8 +88,8 @@ NSString *const KEY_TIME = @"time";
 
     NSDictionary *object = self.objects[indexPath.row];
     
-    cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
-    cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
+    cell.textLabel.text = object[KEY_SHORT_NAME];
+    cell.detailTextLabel.text = [object[KEY_LONG_NAME] capitalizedString];
     return cell;
 }
 

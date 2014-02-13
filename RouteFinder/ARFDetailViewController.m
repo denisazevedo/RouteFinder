@@ -18,7 +18,9 @@
 
 //Table view data
 //TODO change to collection view???
+//Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
 
 @property (strong, nonatomic) id<UITableViewDataSource> stopsDatasource;
 @property (strong, nonatomic) id<UITableViewDataSource> timetableDatasource;
@@ -82,7 +84,10 @@ int const SEGMENT_TIMETABLE = 1;
     } else if (sender.selectedSegmentIndex == SEGMENT_TIMETABLE) { //Timetable
 //        [self.tableView setHidden:YES];
         self.tableView.dataSource = self.timetableDatasource;
-        if (!self.isTimetableLoaded) [self.postRequestDelegate findDeparturesByRouteId:self.detailRoute[KEY_ID] delegate:self]; //TODO set the routeID to a instance property
+        if (!self.isTimetableLoaded && self.detailRoute[KEY_ID]) {
+            [self.loadingActivity startAnimating];
+            [self.postRequestDelegate findDeparturesByRouteId:self.detailRoute[KEY_ID] delegate:self];
+        }
     }
     
     [self.tableView reloadData];
@@ -143,6 +148,7 @@ int const SEGMENT_TIMETABLE = 1;
     }
 
     [self.tableView reloadData];
+    [self.loadingActivity stopAnimating];
 }
 
 #pragma mark - UIViewController Lifecycle
@@ -176,13 +182,17 @@ int const SEGMENT_TIMETABLE = 1;
     self.stopsDatasource = [[ARFStopsTableDatasSource alloc] initWithObjects:self.stops];
     self.timetableDatasource = [[ARFTimetableTableDatasSource alloc] initWithDelegate:self];
     
-    id routeId = [self.detailRoute objectForKey:KEY_ID];
     self.tableView.dataSource = self.stopsDatasource;
-    [self.postRequestDelegate findStopsByRouteId:routeId delegate:self]; //TODO pass the datasource???
-//    [self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self]; //TODO lazy call
+
+    id routeId = [self.detailRoute objectForKey:KEY_ID];
+    if (routeId) {
+        [self.postRequestDelegate findStopsByRouteId:routeId delegate:self]; //TODO pass the datasource???
+    //    [self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self]; //TODO lazy call
+        [self.loadingActivity startAnimating];
+    }
 
 	[self configureView];
-    
+   
     //Test data
 //    [self addTimesToTableView:@[@{KEY_TIME: @"1:23"},
 //                                @{KEY_TIME: @"2:34"}] inSection:SECTION_WEEKDAYS];
