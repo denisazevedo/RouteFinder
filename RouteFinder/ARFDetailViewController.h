@@ -19,8 +19,7 @@
 
 @interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
 
-@property (strong, nonatomic) NSDictionary *detailRoute;
-
+@property (strong, nonatomic) NSDictionary *route;
 enum {
     //Timetable
     SECTION_WEEKDAYS,
@@ -30,7 +29,6 @@ enum {
     SECTION_STOPS,
 };
 //typedef int SectionType;
-
 extern NSString *const NO_TIME_AVAILABLE_MSG;
 
 @end

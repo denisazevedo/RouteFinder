@@ -128,7 +128,7 @@ NSString *const KEY_TIME = @"time";
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDictionary *route = self.objects[indexPath.row];
         
-        [[segue destinationViewController] setDetailRoute:route];
+        [[segue destinationViewController] setRoute:route];
     }
 }
 

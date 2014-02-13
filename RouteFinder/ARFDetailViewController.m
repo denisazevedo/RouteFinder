@@ -15,17 +15,14 @@
 
 @property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
 
-//Table view data
-//TODO change to collection view???
 //Outlets
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView; //TODO change to collection view???
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 //TODO add a table footer to details table
-
 @property (strong, nonatomic) id<UITableViewDataSource> stopsDatasource;
 @property (strong, nonatomic) id<UITableViewDataSource> timetableDatasource;
-
+//Table view data
 @property (strong, nonatomic) NSMutableArray *stops; //Array of NSString
 //TODO Use only one NSDictionary?
 @property (readwrite, strong, nonatomic) NSMutableArray *weekdayTimes; //Array of NSString
@@ -51,10 +48,10 @@ int const SEGMENT_TIMETABLE = 1;
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailRoute:(id)newDetailRoute
+- (void)setRoute:(id)newRoute
 {
-    if (_detailRoute != newDetailRoute) {
-        _detailRoute = newDetailRoute;
+    if (_route != newRoute) {
+        _route = newRoute;
         // Update the view.
         [self configureView];
     }
@@ -67,10 +64,21 @@ int const SEGMENT_TIMETABLE = 1;
 
 - (void)configureView
 {
-    if (self.detailRoute) {
-        self.title = [self.detailRoute[KEY_LONG_NAME] capitalizedString];
+    if (self.route) {
+        self.title = [self.route[KEY_LONG_NAME] capitalizedString];
+        [self clearTableView];
     }
 }
+
+- (void)clearTableView {
+    //Clear the table view
+    [self.stops removeAllObjects];
+    [self.weekdayTimes removeAllObjects];
+    [self.saturdayTimes removeAllObjects];
+    [self.sundayTimes removeAllObjects];
+    [self.tableView reloadData];
+}
+
 
 - (IBAction)segmentAction:(UISegmentedControl *)sender {
 //    NSLog(@"SegmentControl changed: %d", sender.selectedSegmentIndex);
@@ -80,9 +88,9 @@ int const SEGMENT_TIMETABLE = 1;
         
     } else if (sender.selectedSegmentIndex == SEGMENT_TIMETABLE) { //Timetable
         self.tableView.dataSource = self.timetableDatasource;
-        if (!self.isTimetableLoaded && self.detailRoute[KEY_ID]) {
+        if (!self.isTimetableLoaded && self.route[KEY_ID]) {
             [self.loadingIndicator startAnimating];
-            [self.postRequestDelegate findDeparturesByRouteId:self.detailRoute[KEY_ID] delegate:self];
+            [self.postRequestDelegate findDeparturesByRouteId:self.route[KEY_ID] delegate:self];
         }
     }
     
@@ -105,8 +113,7 @@ int const SEGMENT_TIMETABLE = 1;
         case SECTION_SUNDAYS:
             array = self.sundayTimes;
             break;
-        default:
-//        case SECTION_STOPS:
+        default: //case SECTION_STOPS:
             array = self.stops;
             break;
     }
@@ -164,10 +171,8 @@ int const SEGMENT_TIMETABLE = 1;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.detailRoute) {
-        id routeId = [self.detailRoute objectForKey:KEY_ID];
-        NSLog(@"%s routeId: %@", __PRETTY_FUNCTION__, routeId);
-        
+    if (self.route) {
+        NSLog(@"%s routeId: %@", __PRETTY_FUNCTION__, self.route[KEY_ID]);
 //        [self.postRequestDelegate findStopsByRouteId:routeId delegate:self];
         //[self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self];
     }
@@ -181,26 +186,19 @@ int const SEGMENT_TIMETABLE = 1;
     self.saturdayTimes = [[NSMutableArray alloc] init];
     self.sundayTimes = [[NSMutableArray alloc] init];
     
-    //    self.postRequest = [[ARFPostRequest alloc] initWithDelegate:self];
+//    self.postRequest = [[ARFPostRequest alloc] initWithDelegate:self];
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
 
-//    if (self.detailRoute) {
-//    }
-    
     self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
     self.timetableDatasource = [[ARFTimetableDataSource alloc] initWithDelegate:self];
     
     self.tableView.dataSource = self.stopsDatasource;
 
-    id routeId = [self.detailRoute objectForKey:KEY_ID];
-    if (routeId) {
-        [self.postRequestDelegate findStopsByRouteId:routeId delegate:self]; //TODO pass the datasource???
-    //    [self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self]; //TODO lazy call
+    if (self.route) {
+        [self.postRequestDelegate findStopsByRouteId:self.route[KEY_ID] delegate:self]; //TODO pass the datasource???
         [self.loadingIndicator startAnimating];
     }
 
-	[self configureView];
-   
     //Test data
 //    [self addTimesToTableView:@[@{KEY_TIME: @"1:23"},
 //                                @{KEY_TIME: @"2:34"}] inSection:SECTION_WEEKDAYS];
