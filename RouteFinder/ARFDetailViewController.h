@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
 
-@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate>
+//@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate>
+@interface ARFDetailViewController : UITableViewController <ARFPostRequestDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;

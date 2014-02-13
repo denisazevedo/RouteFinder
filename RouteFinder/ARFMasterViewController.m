@@ -25,6 +25,8 @@
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";
 NSString *const KEY_ID = @"id";
+NSString *const KEY_CALENDAR = @"calendar";
+NSString *const KEY_TIME = @"time";
 
 - (void)addRoutesToTableView:(NSArray *)routes {
     [self.objects addObjectsFromArray:routes];
@@ -88,13 +90,14 @@ NSString *const KEY_ID = @"id";
     cell.textLabel.text = [object objectForKey:KEY_SHORT_NAME];
     //cell.detailTextLabel.text = [object objectForKey:KEY_LONG_NAME];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@) %@", [object objectForKey:KEY_ID], [object objectForKey:KEY_LONG_NAME]];
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
-
+/*
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
+*/
 
 #pragma mark - UIViewController Lifecycle
 - (void)viewDidLoad {
@@ -103,8 +106,8 @@ NSString *const KEY_ID = @"id";
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
     
     //Test data
-//    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
-//                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
+    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
+                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 #pragma mark - Segues
