@@ -91,6 +91,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A5BC16718AD45B300CDAD91 /* Datasources */ = {
+			isa = PBXGroup;
+			children = (
+				6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */,
+				6A61123418AC856600DB77DB /* ARFStopsDatasSource.m */,
+				6A61123618AC962A00DB77DB /* ARFTimetableDataSource.h */,
+				6A61123718AC962A00DB77DB /* ARFTimetableDataSource.m */,
+			);
+			name = Datasources;
+			sourceTree = "<group>";
+		};
 		6A787EBD18AB11F100437194 = {
 			isa = PBXGroup;
 			children = (
@@ -125,10 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				6A787EDB18AB11F100437194 /* Main.storyboard */,
-				6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */,
-				6A61123418AC856600DB77DB /* ARFStopsDatasSource.m */,
-				6A61123618AC962A00DB77DB /* ARFTimetableDataSource.h */,
-				6A61123718AC962A00DB77DB /* ARFTimetableDataSource.m */,
+				6A5BC16718AD45B300CDAD91 /* Datasources */,
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
 				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,

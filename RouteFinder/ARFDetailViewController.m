@@ -19,7 +19,7 @@
 //TODO change to collection view???
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 //TODO add a table footer to details table
 
@@ -81,7 +81,7 @@ int const SEGMENT_TIMETABLE = 1;
     } else if (sender.selectedSegmentIndex == SEGMENT_TIMETABLE) { //Timetable
         self.tableView.dataSource = self.timetableDatasource;
         if (!self.isTimetableLoaded && self.detailRoute[KEY_ID]) {
-            [self.loadingActivity startAnimating];
+            [self.loadingIndicator startAnimating];
             [self.postRequestDelegate findDeparturesByRouteId:self.detailRoute[KEY_ID] delegate:self];
         }
     }
@@ -152,11 +152,11 @@ int const SEGMENT_TIMETABLE = 1;
     }
 
     [self.tableView reloadData];
-    [self.loadingActivity stopAnimating];
+    [self.loadingIndicator stopAnimating];
 }
 
 - (void)requestDidFail:(NSError *)error {
-    [self.loadingActivity stopAnimating];
+    [self.loadingIndicator stopAnimating];
 }
 
 #pragma mark - UIViewController Lifecycle
@@ -196,7 +196,7 @@ int const SEGMENT_TIMETABLE = 1;
     if (routeId) {
         [self.postRequestDelegate findStopsByRouteId:routeId delegate:self]; //TODO pass the datasource???
     //    [self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self]; //TODO lazy call
-        [self.loadingActivity startAnimating];
+        [self.loadingIndicator startAnimating];
     }
 
 	[self configureView];
