@@ -116,7 +116,9 @@
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Y6K-Cp-Qkv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tQt-TN-PWz"/>
+                    <navigationItem key="navigationItem" title="Route Finder" id="tQt-TN-PWz">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Add-OV-LPd"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="footnoteLabel" destination="FiA-qu-pDW" id="Rba-bV-E0f"/>
                         <outlet property="loadingIndicator" destination="VQ1-5L-EBf" id="GMz-Rl-CIg"/>

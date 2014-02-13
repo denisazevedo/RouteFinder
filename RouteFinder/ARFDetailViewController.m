@@ -21,6 +21,7 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
+//TODO add a table footer to details table
 
 @property (strong, nonatomic) id<UITableViewDataSource> stopsDatasource;
 @property (strong, nonatomic) id<UITableViewDataSource> timetableDatasource;
