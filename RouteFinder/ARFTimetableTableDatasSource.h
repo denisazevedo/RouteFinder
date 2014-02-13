@@ -7,14 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@protocol ARFTimetableDatasourceDelegate <NSObject>
-- (NSMutableArray *)arrayInSection:(NSInteger)section;
-@end
+#import "ARFDetailViewController.h"
 
 @interface ARFTimetableTableDatasSource : NSObject <UITableViewDataSource>
 
 //Designated initializer
-- (instancetype)initWithDelegate:(id<ARFTimetableDatasourceDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate;
 
 @end

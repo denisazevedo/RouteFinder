@@ -7,30 +7,51 @@
 //
 
 #import "ARFStopsTableDatasSource.h"
+#import "ARFDetailViewController.h"
 
 @interface ARFStopsTableDatasSource ()
-@property (strong, nonatomic) NSMutableArray *objects;
+//@property (strong, nonatomic) NSMutableArray *objects;
+@property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
 @end
 
 @implementation ARFStopsTableDatasSource
 
 //Designated initializer
-- (instancetype)initWithObjects:(NSMutableArray *)objects {
-     self = [self init]; //super's designated initializer
-     if (self) {
-         self.objects = objects;
-     }
-     return self;
+//- (instancetype)initWithObjects:(NSMutableArray *)objects {
+//     self = [self init]; //super's designated initializer
+//     if (self) {
+//         self.objects = objects;
+//     }
+//     return self;
+//}
+
+//Designated initializer
+- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {
+    self = [self init]; //super's designated initializer
+    if (self) {
+        self.delegate = delegate;
+    }
+    return self;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    if ([self.delegate respondsToSelector:@selector(objects)]) {
+        return [[self.delegate objects] count];
+    } else {
+        return [[self.delegate objectsInSection:SECTION_STOPS] count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
 
-    NSString *name = [self.objects objectAtIndex:indexPath.row];
+    NSString *name;
+    if ([self.delegate respondsToSelector:@selector(objects)]) {
+        name = [[self.delegate objects] objectAtIndex:indexPath.row];
+    } else {
+        name = [[self.delegate objectsInSection:SECTION_STOPS] objectAtIndex:indexPath.row];
+    }
+   
     cell.textLabel.text = name;
     if (!cell.textLabel.enabled) cell.textLabel.enabled = YES;
     return cell;

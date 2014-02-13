@@ -9,10 +9,9 @@
 #import "ARFDetailViewController.h"
 #import "ARFMasterViewController.h"
 #import "ARFStopsTableDatasSource.h"
+#import "ARFTimetableTableDatasSource.h"
 
 @interface ARFDetailViewController ()
-
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
 
@@ -21,10 +20,12 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 //TODO add a table footer to details table
 
 @property (strong, nonatomic) id<UITableViewDataSource> stopsDatasource;
 @property (strong, nonatomic) id<UITableViewDataSource> timetableDatasource;
+
 @property (strong, nonatomic) NSMutableArray *stops; //Array of NSString
 //TODO Use only one NSDictionary?
 @property (readwrite, strong, nonatomic) NSMutableArray *weekdayTimes; //Array of NSString
@@ -45,10 +46,6 @@ NSString *const KEY_SUNDAY = @"SUNDAY";
 
 NSString *const NO_TIME_AVAILABLE_MSG = @"No time available";
 
-//int const SECTION_WEEKDAYS = 0;
-//int const SECTION_SATURDAYS = 1;
-//int const SECTION_SUNDAYS = 2;
-
 int const SEGMENT_STOPS = 0;
 int const SEGMENT_TIMETABLE = 1;
 
@@ -64,7 +61,7 @@ int const SEGMENT_TIMETABLE = 1;
 }
 
 - (void)addTimesToTableView:(NSArray *)times inSection:(NSInteger)section {
-    [[self arrayInSection:section] addObjectsFromArray:times];
+    [[self objectsInSection:section] addObjectsFromArray:times];
     [self.tableView reloadData];
 }
 
@@ -79,11 +76,9 @@ int const SEGMENT_TIMETABLE = 1;
 //    NSLog(@"SegmentControl changed: %d", sender.selectedSegmentIndex);
     
     if (sender.selectedSegmentIndex == SEGMENT_STOPS) {
-//        [self.tableView setHidden:NO];
         self.tableView.dataSource = self.stopsDatasource;
         
     } else if (sender.selectedSegmentIndex == SEGMENT_TIMETABLE) { //Timetable
-//        [self.tableView setHidden:YES];
         self.tableView.dataSource = self.timetableDatasource;
         if (!self.isTimetableLoaded && self.detailRoute[KEY_ID]) {
             [self.loadingActivity startAnimating];
@@ -94,7 +89,11 @@ int const SEGMENT_TIMETABLE = 1;
     [self.tableView reloadData];
 }
 
-- (NSMutableArray *)arrayInSection:(NSInteger)section {
+- (NSMutableArray *)objects {
+    return self.stops;
+}
+
+- (NSMutableArray *)objectsInSection:(NSInteger)section {
     NSMutableArray *array;
     switch (section) {
         case SECTION_WEEKDAYS:
@@ -105,6 +104,10 @@ int const SEGMENT_TIMETABLE = 1;
             break;
         case SECTION_SUNDAYS:
             array = self.sundayTimes;
+            break;
+        default:
+//        case SECTION_STOPS:
+            array = self.stops;
             break;
     }
     return array;
@@ -180,7 +183,7 @@ int const SEGMENT_TIMETABLE = 1;
 //    if (self.detailRoute) {
 //    }
     
-    self.stopsDatasource = [[ARFStopsTableDatasSource alloc] initWithObjects:self.stops];
+    self.stopsDatasource = [[ARFStopsTableDatasSource alloc] initWithDelegate:self];
     self.timetableDatasource = [[ARFTimetableTableDatasSource alloc] initWithDelegate:self];
     
     self.tableView.dataSource = self.stopsDatasource;

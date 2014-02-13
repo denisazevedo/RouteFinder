@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ARFDetailViewController.h"
 
 @interface ARFStopsTableDatasSource : NSObject <UITableViewDataSource>
 
 //Designated initializer
-- (instancetype)initWithObjects:(NSMutableArray *)objects;
+//- (instancetype)initWithObjects:(NSMutableArray *)objects;
 
 //@property (strong, nonatomic) NSMutableArray *stops;
+
+//Designated initializer
+- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate;
 
 @end

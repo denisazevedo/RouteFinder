@@ -10,13 +10,13 @@
 #import "ARFDetailViewController.h"
 
 @interface ARFTimetableTableDatasSource ()
-@property (nonatomic, strong) id delegate;
+@property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
 @end
 
 @implementation ARFTimetableTableDatasSource
 
 //Designated initializer
-- (instancetype)initWithDelegate:(id<ARFTimetableDatasourceDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {
     self = [self init]; //super's designated initializer
     if (self) {
         self.delegate = delegate;
@@ -31,13 +31,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.delegate arrayInSection:section] count];
+    return [[self.delegate objectsInSection:section] count];
 }
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
     
-    NSMutableArray *rows = [self.delegate arrayInSection:indexPath.section];
+    NSMutableArray *rows = [self.delegate objectsInSection:indexPath.section];
     
     NSString *time = [rows objectAtIndex:indexPath.row];
     cell.textLabel.text = time;

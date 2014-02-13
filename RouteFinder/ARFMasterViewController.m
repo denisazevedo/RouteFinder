@@ -82,6 +82,10 @@ NSString *const KEY_TIME = @"time";
     [self addRoutesToTableView:rows];
 }
 
+//- (void)requestDidComplete:(NSArray *)rows { //TODO with error
+//    [self.loadingIndicator stopAnimating];
+//}
+
 #pragma mark Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

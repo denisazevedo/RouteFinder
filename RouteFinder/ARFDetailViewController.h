@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
-#import "ARFTimetableTableDatasSource.h"
+//#import "ARFTimetableTableDatasSource.h"
 
-@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTimetableDatasourceDelegate>
+@protocol ARFTableDatasourceDelegate <NSObject>
+@required
+- (NSMutableArray *)objectsInSection:(NSInteger)section;
+@optional
+- (NSMutableArray *)objects;
+@end
+
+
+@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
 //@interface ARFDetailViewController : UITableViewController <ARFPostRequestDelegate>
 
 @property (strong, nonatomic) NSDictionary *detailRoute;
@@ -22,9 +30,12 @@
 //- (NSMutableArray *)arrayInSection:(NSInteger)section;
 
 enum {
+    //Timetable
     SECTION_WEEKDAYS,
     SECTION_SATURDAYS,
     SECTION_SUNDAYS,
+    //Stops
+    SECTION_STOPS,
 };
 //typedef int SectionType;
 
