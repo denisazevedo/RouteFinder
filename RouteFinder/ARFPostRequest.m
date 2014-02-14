@@ -83,21 +83,27 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-//    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate];
-        self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-}
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 
+    [self performSelector:@selector(setNetworkActivityIndicatorVisible:) withObject:@YES afterDelay:3.0]; //show the network indicator after 3 seconds
+}
 /*
 - (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
     [self postRequest:params toURL:url delegate:self];
 }
 */
 
+- (void)setNetworkActivityIndicatorVisible:(NSNumber *)visible {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:[visible boolValue]];
+}
+
+
 #pragma mark - Protocols
 #pragma mark NSURLConnectionDataDelegate implementation
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+    [self setNetworkActivityIndicatorVisible:@NO];
     NSLog(@"%s Received %d bytes", __PRETTY_FUNCTION__, [self.responseData length]);
 //    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
     
@@ -124,6 +130,7 @@
 #pragma mark NSURLConnectionDelegate implementation
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    [self setNetworkActivityIndicatorVisible:@NO];
     NSLog(@"Connection failed! Error - %@ - %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
