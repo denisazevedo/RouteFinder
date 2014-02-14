@@ -8,6 +8,7 @@
 
 #import "ARFMasterViewController.h"
 #import "ARFDetailViewController.h"
+#import "ARFMapViewController.h"
 
 @interface ARFMasterViewController ()
 
@@ -39,7 +40,7 @@ NSString *const KEY_TIME = @"time";
 
 - (void)refreshTableFooter:(BOOL)isVisible {
     if (isVisible) {
-        self.footnoteLabel.text = [NSString stringWithFormat:@"%d row(s) found", [self.objects count]];
+        self.footnoteLabel.text = [NSString stringWithFormat:@"%d route(s) found", [self.objects count]];
     }
     self.tableView.tableFooterView.hidden = !isVisible;
 }
@@ -109,6 +110,7 @@ NSString *const KEY_TIME = @"time";
 }
 
 #pragma mark - UIViewController Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self refreshTableFooter:NO];
@@ -121,6 +123,16 @@ NSString *const KEY_TIME = @"time";
 }
 
 #pragma mark - Segues
+
+- (IBAction)unwindToMaster:(UIStoryboardSegue *)segue {
+    
+    ARFMapViewController *mapViewController = [segue sourceViewController];
+    NSString *streetName = mapViewController.streetName;
+    if (streetName) {
+        [self clearTableView];
+        [self.postRequestDelegate findRoutesByStopName:streetName delegate:self];
+    }
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 

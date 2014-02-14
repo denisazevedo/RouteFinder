@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A3777B418ADF72400638510 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A3777B318ADF72400638510 /* MapKit.framework */; };
+		6A3777B718ADF9A500638510 /* ARFMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3777B618ADF9A500638510 /* ARFMapViewController.m */; };
 		6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123118AC027B00DB77DB /* ARFPostRequest.m */; };
 		6A61123518AC856600DB77DB /* ARFStopsDatasSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123418AC856600DB77DB /* ARFStopsDatasSource.m */; };
 		6A61123818AC962A00DB77DB /* ARFTimetableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123718AC962A00DB77DB /* ARFTimetableDataSource.m */; };
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A3777B318ADF72400638510 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6A3777B518ADF9A500638510 /* ARFMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFMapViewController.h; sourceTree = "<group>"; };
+		6A3777B618ADF9A500638510 /* ARFMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFMapViewController.m; sourceTree = "<group>"; };
 		6A61123018AC027B00DB77DB /* ARFPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFPostRequest.h; sourceTree = "<group>"; };
 		6A61123118AC027B00DB77DB /* ARFPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFPostRequest.m; sourceTree = "<group>"; };
 		6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFStopsDatasSource.h; sourceTree = "<group>"; };
@@ -72,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A3777B418ADF72400638510 /* MapKit.framework in Frameworks */,
 				6A787ECC18AB11F100437194 /* CoreGraphics.framework in Frameworks */,
 				6A787ECE18AB11F100437194 /* UIKit.framework in Frameworks */,
 				6A787ECA18AB11F100437194 /* Foundation.framework in Frameworks */,
@@ -124,6 +130,7 @@
 		6A787EC818AB11F100437194 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A3777B318ADF72400638510 /* MapKit.framework */,
 				6A787EC918AB11F100437194 /* Foundation.framework */,
 				6A787ECB18AB11F100437194 /* CoreGraphics.framework */,
 				6A787ECD18AB11F100437194 /* UIKit.framework */,
@@ -137,6 +144,8 @@
 			children = (
 				6A787EDB18AB11F100437194 /* Main.storyboard */,
 				6A5BC16718AD45B300CDAD91 /* Datasources */,
+				6A3777B518ADF9A500638510 /* ARFMapViewController.h */,
+				6A3777B618ADF9A500638510 /* ARFMapViewController.m */,
 				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
 				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
 				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,
@@ -285,6 +294,7 @@
 				6A787EE018AB11F100437194 /* ARFMasterViewController.m in Sources */,
 				6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */,
 				6A787EE318AB11F100437194 /* ARFDetailViewController.m in Sources */,
+				6A3777B718ADF9A500638510 /* ARFMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

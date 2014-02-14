@@ -31,7 +31,7 @@
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="governador" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kxj-E4-Ic7">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kxj-E4-Ic7">
                                     <rect key="frame" x="20" y="7" width="224" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -67,8 +67,8 @@
                             <rect key="frame" x="0.0" y="174" width="320" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X routes found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiA-qu-pDW">
-                                    <rect key="frame" x="119" y="4" width="82" height="15"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X route(s) found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiA-qu-pDW">
+                                    <rect key="frame" x="116" y="4" width="89" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="highlightedColor"/>
@@ -118,6 +118,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Route Finder" id="tQt-TN-PWz">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Add-OV-LPd"/>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="j0d-Mv-eOR">
+                            <connections>
+                                <segue destination="xnW-qr-cJS" kind="modal" id="aaY-oE-k0O"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="footnoteLabel" destination="FiA-qu-pDW" id="Rba-bV-E0f"/>
@@ -129,6 +134,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="459" y="64"/>
+        </scene>
+        <!--Map View Controller - Street Picker-->
+        <scene sceneID="RVn-BY-5Zn">
+            <objects>
+                <viewController id="Pxf-pH-Ybz" customClass="ARFMapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="x2C-N7-E10"/>
+                        <viewControllerLayoutGuide type="bottom" id="c46-mU-Cii"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q8I-Dk-gcg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="P5f-Cu-jKw">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="UU9-3a-l9l" appends="YES" id="Ui2-XB-PXb"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="P5f-Cu-jKw" secondAttribute="bottom" id="87x-Ac-qK7"/>
+                            <constraint firstAttribute="trailing" secondItem="P5f-Cu-jKw" secondAttribute="trailing" id="Vsq-2l-3Ra"/>
+                            <constraint firstItem="P5f-Cu-jKw" firstAttribute="top" secondItem="q8I-Dk-gcg" secondAttribute="top" id="lAo-ac-9fF"/>
+                            <constraint firstItem="P5f-Cu-jKw" firstAttribute="leading" secondItem="q8I-Dk-gcg" secondAttribute="leading" id="yhC-w1-48T"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Street Picker" id="Idi-tQ-Jsy">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6EY-KQ-v3Y">
+                            <connections>
+                                <segue destination="1Y7-Vz-amM" kind="unwind" unwindAction="unwindToMaster:" id="hCM-ET-Byt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="P5f-Cu-jKw" id="2c1-LT-OOE"/>
+                        <segue destination="1Y7-Vz-amM" kind="unwind" identifier="UnwindToMaster" unwindAction="unwindToMaster:" id="eq4-w3-MZC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gb0-js-ZsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1Y7-Vz-amM" userLabel="Exit" sceneMemberID="exit"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="UU9-3a-l9l">
+                    <connections>
+                        <action selector="longPress:" destination="Pxf-pH-Ybz" id="wqy-Jf-c9x"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1527" y="357"/>
         </scene>
         <!--Detail View Controller - Detail-->
         <scene sceneID="Cn3-H9-jdl">
@@ -210,7 +266,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="911" y="64"/>
+            <point key="canvasLocation" x="1001" y="-306"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uyM-K5-AS1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xnW-qr-cJS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LUc-dj-7lR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Pxf-pH-Ybz" kind="relationship" relationship="rootViewController" id="inH-rO-Pa7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7vj-dj-aMb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1001" y="357"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.4392156862745098" green="0.5490196078431373" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
