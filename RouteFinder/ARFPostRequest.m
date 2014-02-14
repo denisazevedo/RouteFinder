@@ -14,6 +14,7 @@
 //Connection
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *responseData;
+@property BOOL connectionDidFinish;
 
 @end
 
@@ -85,6 +86,7 @@
     
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 
+    self.connectionDidFinish = NO;
     [self performSelector:@selector(setNetworkActivityIndicatorVisible:) withObject:@YES afterDelay:3.0]; //show the network indicator after 3 seconds
 }
 /*
@@ -94,6 +96,7 @@
 */
 
 - (void)setNetworkActivityIndicatorVisible:(NSNumber *)visible {
+    if (visible && self.connectionDidFinish) return;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:[visible boolValue]];
 }
 
@@ -104,6 +107,8 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     [self setNetworkActivityIndicatorVisible:@NO];
+    self.connectionDidFinish = YES;
+    
     NSLog(@"%s Received %d bytes", __PRETTY_FUNCTION__, [self.responseData length]);
 //    NSLog(@"Response: %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
     
@@ -130,7 +135,10 @@
 #pragma mark NSURLConnectionDelegate implementation
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    
     [self setNetworkActivityIndicatorVisible:@NO];
+    self.connectionDidFinish = YES;
+    
     NSLog(@"Connection failed! Error - %@ - %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
