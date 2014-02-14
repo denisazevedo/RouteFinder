@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
 
-@interface ARFMasterViewController : UITableViewController <ARFPostRequestDelegate>
+@interface ARFMasterViewController : UITableViewController <ARFPostRequestDelegate, UISearchBarDelegate>
 
 //Constants
 extern NSString *const KEY_SHORT_NAME;

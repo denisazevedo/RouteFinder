@@ -17,7 +17,7 @@
 //Table view data
 @property (strong, nonatomic) NSMutableArray *objects; //array of NSDictionary
 //Outlets
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *footnoteLabel;
 
@@ -64,9 +64,8 @@ NSString *const KEY_TIME = @"time";
 #pragma mark - IBActions
 
 - (IBAction)search:(UIButton *)sender {
-    if (self.searchTextField.text.length > 0) {
-        [self performSearch:self.searchTextField.text];
-    }
+    //As per Cristiano's requirements, need a button called 'Search'
+    [self searchBarSearchButtonClicked:self.searchBar];
 }
 
 #pragma mark - Properties
@@ -114,11 +113,32 @@ NSString *const KEY_TIME = @"time";
     return cell;
 }
 
+#pragma mark Search Bar
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if (searchBar.text.length > 0) {
+        [self performSearch:searchBar.text];
+    }
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    //There is no Cancel button to avoid conflicting with the Search button (in terms of layout)
+    //See search method comment
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
+
 #pragma mark - UIViewController Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self refreshTableFooter:NO];
+    
+    self.searchBar.delegate = self;
     
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
     
@@ -134,7 +154,7 @@ NSString *const KEY_TIME = @"time";
     ARFMapViewController *mapViewController = [segue sourceViewController];
     NSString *streetName = mapViewController.streetName;
     if (streetName) {
-        self.searchTextField.text = streetName;
+        self.searchBar.text = streetName;
         [self performSearch:streetName];
     }
 }

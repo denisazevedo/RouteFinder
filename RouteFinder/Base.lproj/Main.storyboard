@@ -31,12 +31,6 @@
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kxj-E4-Ic7">
-                                    <rect key="frame" x="20" y="7" width="224" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VQ1-5L-EBf">
                                     <rect key="frame" x="150" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -51,16 +45,21 @@
                                         <action selector="search:" destination="pGg-6v-bdr" eventType="touchUpInside" id="3gN-xT-zfW"/>
                                     </connections>
                                 </button>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter your route" translatesAutoresizingMaskIntoConstraints="NO" id="O8D-tn-zK3">
+                                    <rect key="frame" x="0.0" y="0.0" width="252" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="VQ1-5L-EBf" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="12" id="4FI-QF-9se"/>
-                                <constraint firstItem="kxj-E4-Ic7" firstAttribute="leading" secondItem="j1W-QK-ZDx" secondAttribute="leading" constant="20" id="6ng-jq-W5r"/>
-                                <constraint firstItem="kxj-E4-Ic7" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="7" id="8N0-XL-uzR"/>
+                                <constraint firstItem="O8D-tn-zK3" firstAttribute="leading" secondItem="j1W-QK-ZDx" secondAttribute="leading" id="Dcm-fL-8I8"/>
                                 <constraint firstItem="MhG-dP-leW" firstAttribute="top" secondItem="j1W-QK-ZDx" secondAttribute="top" constant="7" id="ENV-3Z-hKn"/>
-                                <constraint firstItem="kxj-E4-Ic7" firstAttribute="centerX" secondItem="VQ1-5L-EBf" secondAttribute="centerX" constant="-28" id="Ljh-Sw-VrX"/>
+                                <constraint firstItem="VQ1-5L-EBf" firstAttribute="centerY" secondItem="O8D-tn-zK3" secondAttribute="centerY" id="Wlr-NY-B1b"/>
                                 <constraint firstAttribute="trailing" secondItem="MhG-dP-leW" secondAttribute="trailing" constant="20" id="Ywv-NL-Sg5"/>
-                                <constraint firstItem="MhG-dP-leW" firstAttribute="leading" secondItem="kxj-E4-Ic7" secondAttribute="trailing" constant="8" id="gWq-KD-ZrQ"/>
+                                <constraint firstItem="VQ1-5L-EBf" firstAttribute="centerX" secondItem="j1W-QK-ZDx" secondAttribute="centerX" id="cUH-zG-7m8"/>
+                                <constraint firstItem="O8D-tn-zK3" firstAttribute="trailing" secondItem="MhG-dP-leW" secondAttribute="leading" id="diU-rP-zie"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="vzp-H1-geU">
@@ -127,7 +126,7 @@
                     <connections>
                         <outlet property="footnoteLabel" destination="FiA-qu-pDW" id="Rba-bV-E0f"/>
                         <outlet property="loadingIndicator" destination="VQ1-5L-EBf" id="GMz-Rl-CIg"/>
-                        <outlet property="searchTextField" destination="kxj-E4-Ic7" id="QOL-rh-sw5"/>
+                        <outlet property="searchBar" destination="O8D-tn-zK3" id="JPe-b1-LBd"/>
                         <outlet property="tableView" destination="mLL-gJ-YKr" id="Hje-WY-Z6y"/>
                     </connections>
                 </tableViewController>
