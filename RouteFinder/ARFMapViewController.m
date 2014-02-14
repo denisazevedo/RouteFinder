@@ -11,7 +11,7 @@
 @interface ARFMapViewController ()
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) CLGeocoder *geocoder; //TODO or weak?
+@property (strong, nonatomic) CLGeocoder *geocoder;
 @property (strong, nonatomic) NSMutableArray *geocodingResults;
 
 @end

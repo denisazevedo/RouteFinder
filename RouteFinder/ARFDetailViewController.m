@@ -140,13 +140,10 @@ int const SEGMENT_TIMETABLE = 1;
 
         for (NSDictionary *row in rows) {
             if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_WEEK_DAY]) {
-                if (self.weekdayTimes.count > 2) continue; //TODO remove (debug)
                 [self.weekdayTimes addObject:[row objectForKey:KEY_TIME]];
             } else if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_SATURDAY]) {
-                if (self.saturdayTimes.count > 2) continue; //TODO remove (debug)
                 [self.saturdayTimes addObject:[row objectForKey:KEY_TIME]];
             } else if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_SUNDAY]) {
-                if (self.sundayTimes.count > 2) continue; //TODO remove (debug)
                 [self.sundayTimes addObject:[row objectForKey:KEY_TIME]];
             }
         }

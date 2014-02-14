@@ -52,15 +52,20 @@ NSString *const KEY_TIME = @"time";
     [self refreshTableFooter:NO];
 }
 
+- (void)performSearch:(NSString *)routeName {
+    [self clearTableView];
+    if (routeName.length > 0) {
+        NSString *param = [NSString stringWithFormat:@"%%%@%%", routeName];
+        [self.postRequestDelegate findRoutesByStopName:param delegate:self];
+        [self.loadingIndicator startAnimating];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)search:(UIButton *)sender {
-
-    [self clearTableView];
     if (self.searchTextField.text.length > 0) {
-        NSString *param = [NSString stringWithFormat:@"%%%@%%", self.searchTextField.text];
-        [self.postRequestDelegate findRoutesByStopName:param delegate:self];
-        [self.loadingIndicator startAnimating];
+        [self performSearch:self.searchTextField.text];
     }
 }
 
@@ -129,8 +134,8 @@ NSString *const KEY_TIME = @"time";
     ARFMapViewController *mapViewController = [segue sourceViewController];
     NSString *streetName = mapViewController.streetName;
     if (streetName) {
-        [self clearTableView];
-        [self.postRequestDelegate findRoutesByStopName:streetName delegate:self];
+        self.searchTextField.text = streetName;
+        [self performSearch:streetName];
     }
 }
 
