@@ -15,7 +15,7 @@
 //Connection delegate
 @property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
 //Table view data
-@property (strong, nonatomic) NSMutableArray *objects; //array of NSDictionary
+@property (strong, nonatomic) NSMutableArray *routes; //array of NSDictionary
 //Outlets
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -33,20 +33,20 @@ NSString *const KEY_CALENDAR = @"calendar";
 NSString *const KEY_TIME = @"time";
 
 - (void)addRoutesToTableView:(NSArray *)routes {
-    [self.objects addObjectsFromArray:routes];
+    [self.routes addObjectsFromArray:routes];
     [self.tableView reloadData];
     [self refreshTableFooter:YES];
 }
 
 - (void)refreshTableFooter:(BOOL)isVisible {
     if (isVisible) {
-        self.footnoteLabel.text = [NSString stringWithFormat:@"%d route(s) found", [self.objects count]];
+        self.footnoteLabel.text = [NSString stringWithFormat:@"%d route(s) found", [self.routes count]];
     }
     self.tableView.tableFooterView.hidden = !isVisible;
 }
 
 - (void)clearTableView {
-    [self.objects removeAllObjects];
+    [self.routes removeAllObjects];
     [self.tableView reloadData];
     [self refreshTableFooter:NO];
 }
@@ -69,11 +69,11 @@ NSString *const KEY_TIME = @"time";
 
 #pragma mark - Properties
 
-- (NSMutableArray *)objects {
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
+- (NSMutableArray *)routes {
+    if (!_routes) {
+        _routes = [[NSMutableArray alloc] init];
     }
-    return _objects;
+    return _routes;
 }
 
 #pragma mark - Protocols
@@ -99,13 +99,13 @@ NSString *const KEY_TIME = @"time";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return self.routes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDictionary *object = self.objects[indexPath.row];
+    NSDictionary *object = self.routes[indexPath.row];
     
     cell.textLabel.text = object[KEY_SHORT_NAME];
     cell.detailTextLabel.text = [object[KEY_LONG_NAME] capitalizedString];
@@ -159,7 +159,7 @@ NSString *const KEY_TIME = @"time";
 
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDictionary *route = self.objects[indexPath.row];
+        NSDictionary *route = self.routes[indexPath.row];
         
         [[segue destinationViewController] setRoute:route];
     }
