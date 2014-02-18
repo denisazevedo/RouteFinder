@@ -10,7 +10,7 @@
 #import "ARFRouteDetailsViewController.h"
 
 @interface ARFTimetableDataSource ()
-@property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;
+@property (weak, nonatomic) id<ARFTableDatasourceDelegate> delegate;
 @end
 
 @implementation ARFTimetableDataSource
