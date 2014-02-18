@@ -13,8 +13,8 @@
 
 @interface ARFRouteDetailsViewController ()
 
-@property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
-
+//Connection helper
+@property (strong, nonatomic) ARFPostRequest *postRequestHelper;
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView; //TODO change to collection view???
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -82,7 +82,7 @@ int const SEGMENT_TIMETABLE = 1;
         self.tableView.dataSource = self.timetableDatasource;
         if (!self.isTimetableLoaded && self.route[KEY_ID]) {
             [self.loadingIndicator startAnimating];
-            [self.postRequestDelegate findDeparturesByRouteId:self.route[KEY_ID] delegate:self];
+            [self.postRequestHelper findDeparturesByRouteId:self.route[KEY_ID] delegate:self];
         }
     }
     
@@ -190,7 +190,7 @@ int const SEGMENT_TIMETABLE = 1;
     self.saturdayTimes = [[NSMutableArray alloc] init];
     self.sundayTimes = [[NSMutableArray alloc] init];
     
-    self.postRequestDelegate = [[ARFPostRequest alloc] init];
+    self.postRequestHelper = [[ARFPostRequest alloc] init];
 
     self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
     self.timetableDatasource = [[ARFTimetableDataSource alloc] initWithDelegate:self];
@@ -198,7 +198,7 @@ int const SEGMENT_TIMETABLE = 1;
     self.tableView.dataSource = self.stopsDatasource;
 
     if (self.route) {
-        [self.postRequestDelegate findStopsByRouteId:self.route[KEY_ID] delegate:self]; //TODO pass the datasource???
+        [self.postRequestHelper findStopsByRouteId:self.route[KEY_ID] delegate:self]; //TODO pass the datasource???
         [self.loadingIndicator startAnimating];
     }
 }

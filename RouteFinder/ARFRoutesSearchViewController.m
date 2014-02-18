@@ -12,8 +12,8 @@
 
 @interface ARFRoutesSearchViewController ()
 
-//Connection delegate
-@property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
+//Connection helper
+@property (strong, nonatomic) ARFPostRequest *postRequestHelper;
 //Table view data
 @property (strong, nonatomic) NSMutableArray *routes; //array of NSDictionary
 //Outlets
@@ -55,7 +55,7 @@ NSString *const KEY_TIME = @"time";
     [self clearTableView];
     if (routeName.length > 0) {
         NSString *param = [NSString stringWithFormat:@"%%%@%%", routeName];
-        [self.postRequestDelegate findRoutesByStopName:param delegate:self];
+        [self.postRequestHelper findRoutesByStopName:param delegate:self];
         [self.loadingIndicator startAnimating];
     }
 }
@@ -147,7 +147,7 @@ NSString *const KEY_TIME = @"time";
     
     self.searchBar.delegate = self;
     
-    self.postRequestDelegate = [[ARFPostRequest alloc] init];
+    self.postRequestHelper = [[ARFPostRequest alloc] init];
 }
 
 #pragma mark - Segues
