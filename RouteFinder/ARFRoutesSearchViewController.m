@@ -105,10 +105,10 @@ NSString *const KEY_TIME = @"time";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDictionary *object = self.routes[indexPath.row];
+    NSDictionary *route = self.routes[indexPath.row];
     
-    cell.textLabel.text = object[KEY_SHORT_NAME];
-    cell.detailTextLabel.text = [object[KEY_LONG_NAME] capitalizedString];
+    cell.textLabel.text = route[KEY_SHORT_NAME];
+    cell.detailTextLabel.text = [route[KEY_LONG_NAME] capitalizedString];
     return cell;
 }
 

@@ -28,7 +28,7 @@ enum {
     //Stops
     SECTION_STOPS,
 };
-//typedef int SectionType;
+
 extern NSString *const NO_TIME_AVAILABLE_MSG;
 
 @end
