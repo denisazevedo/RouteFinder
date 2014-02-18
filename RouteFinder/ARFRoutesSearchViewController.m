@@ -113,6 +113,7 @@ NSString *const KEY_TIME = @"time";
 }
 
 #pragma mark Search Bar
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     if (searchBar.text.length > 0) {
         [self performSearch:searchBar.text];
