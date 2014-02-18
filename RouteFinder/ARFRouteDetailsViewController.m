@@ -105,7 +105,7 @@ int const SEGMENT_TIMETABLE = 1;
         case SECTION_SUNDAYS:
             array = self.sundayTimes;
             break;
-        default: //case SECTION_STOPS:
+        case SECTION_STOPS:
             array = self.stops;
             break;
     }
