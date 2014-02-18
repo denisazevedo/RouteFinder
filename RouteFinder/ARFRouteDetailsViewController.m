@@ -30,7 +30,7 @@
 @property (readwrite, strong, nonatomic) NSMutableArray *sundayTimes; //Array of NSString
 @property (nonatomic) BOOL isTimetableLoaded;
 
-- (void)configureView;
+- (void)updateView;
 @end
 
 @implementation ARFRouteDetailsViewController
@@ -52,8 +52,7 @@ int const SEGMENT_TIMETABLE = 1;
 {
     if (_route != newRoute) {
         _route = newRoute;
-        // Update the view.
-        [self configureView];
+        [self updateView];
     }
 }
 
@@ -62,7 +61,7 @@ int const SEGMENT_TIMETABLE = 1;
     [self.tableView reloadData];
 }
 
-- (void)configureView
+- (void)updateView
 {
     if (self.route) {
         self.title = [self.route[KEY_LONG_NAME] capitalizedString];
