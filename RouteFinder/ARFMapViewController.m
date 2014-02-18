@@ -21,6 +21,8 @@
 
 NSString * const CITY_NAME = @"Florianopolis";
 
+const int YES_PLEASE_BUTTON_INDEX = 0;
+
 - (IBAction)longPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
         CGPoint pressPoint = [sender locationInView:self.mapView];
@@ -131,7 +133,7 @@ const int SPAN_METERS = 2500;
 #pragma mark ActionSheet delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) { //Yes, please
+    if (buttonIndex == YES_PLEASE_BUTTON_INDEX) {
         [self performSegueWithIdentifier:@"UnwindToMaster" sender:self];
     }
 }
