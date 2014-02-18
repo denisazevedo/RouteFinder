@@ -56,11 +56,6 @@ int const SEGMENT_TIMETABLE = 1;
     }
 }
 
-- (void)addTimesToTableView:(NSArray *)times inSection:(NSInteger)section {
-    [[self objectsInSection:section] addObjectsFromArray:times];
-    [self.tableView reloadData];
-}
-
 - (void)updateView
 {
     if (self.route) {
