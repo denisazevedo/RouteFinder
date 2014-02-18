@@ -120,38 +120,45 @@ int const SEGMENT_TIMETABLE = 1;
     NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
     
     if (self.segmentedControl.selectedSegmentIndex == SEGMENT_STOPS) {
-        self.tableView.dataSource = self.stopsDatasource;
-
-        for (NSDictionary *row in rows) {
-            NSString *name = [row objectForKey:KEY_NAME];
-            [self.stops addObject:[name capitalizedString]];
-        }
-        
+        [self processStopsResponse:rows];
     } else if (self.segmentedControl.selectedSegmentIndex == SEGMENT_TIMETABLE) {
-        self.tableView.dataSource = self.timetableDatasource;
-
-        for (NSDictionary *row in rows) {
-            if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_WEEK_DAY]) {
-                [self.weekdayTimes addObject:[row objectForKey:KEY_TIME]];
-            } else if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_SATURDAY]) {
-                [self.saturdayTimes addObject:[row objectForKey:KEY_TIME]];
-            } else if ([[row objectForKey:KEY_CALENDAR] isEqualToString:KEY_SUNDAY]) {
-                [self.sundayTimes addObject:[row objectForKey:KEY_TIME]];
-            }
-        }
-        self.isTimetableLoaded = YES;
-        
-        //Adds a "No time available" message to the section
-        if (self.weekdayTimes.count == 0)
-            [self.weekdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-        if (self.saturdayTimes.count == 0)
-            [self.saturdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-        if (self.sundayTimes.count == 0)
-            [self.sundayTimes addObject:NO_TIME_AVAILABLE_MSG];
+        [self processTimetableResponse:rows];
     }
 
     [self.tableView reloadData];
     [self.loadingIndicator stopAnimating];
+}
+
+- (void)processStopsResponse:(NSArray *)stops {
+    self.tableView.dataSource = self.stopsDatasource;
+    
+    for (NSDictionary *stop in stops) {
+        NSString *name = stop[KEY_NAME];
+        [self.stops addObject:[name capitalizedString]];
+    }
+}
+
+- (void)processTimetableResponse:(NSArray *)timetable {
+    self.tableView.dataSource = self.timetableDatasource;
+    
+    for (NSDictionary *time in timetable) {
+        if ([time[KEY_CALENDAR] isEqualToString:KEY_WEEK_DAY]) {
+            [self.weekdayTimes addObject:time[KEY_TIME]];
+        } else if ([time[KEY_CALENDAR] isEqualToString:KEY_SATURDAY]) {
+            [self.saturdayTimes addObject:time[KEY_TIME]];
+        } else if ([time[KEY_CALENDAR] isEqualToString:KEY_SUNDAY]) {
+            [self.sundayTimes addObject:time[KEY_TIME]];
+        }
+    }
+    self.isTimetableLoaded = YES;
+    
+    //Adds a "No time available" message to the section
+    if (self.weekdayTimes.count == 0)
+        [self.weekdayTimes addObject:NO_TIME_AVAILABLE_MSG];
+    if (self.saturdayTimes.count == 0)
+        [self.saturdayTimes addObject:NO_TIME_AVAILABLE_MSG];
+    if (self.sundayTimes.count == 0)
+        [self.sundayTimes addObject:NO_TIME_AVAILABLE_MSG];
 }
 
 - (void)requestDidFail:(NSError *)error {
