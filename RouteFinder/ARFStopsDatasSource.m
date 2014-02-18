@@ -43,7 +43,8 @@
     }
    
     cell.textLabel.text = name;
-    if (!cell.textLabel.enabled) cell.textLabel.enabled = YES;
+    if (!cell.textLabel.enabled)
+        cell.textLabel.enabled = YES;
     return cell;
 }
 

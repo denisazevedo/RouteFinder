@@ -25,17 +25,6 @@
 #define URL_STOPS_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findStopsByRouteId/run"
 #define URL_DEPARTURES_BY_ROUTE_ID @"https://dashboard.appglu.com/v1/queries/findDeparturesByRouteId/run"
 
-/*
-//Designated initializer
-- (instancetype)initWithDelegate:(id<ARFPostRequestDelegate>)delegate {
-    self = [self init]; //super's designated initializer
-    if (self) {
-        self.delegate = delegate;
-    }
-    return self;
-}
-*/
-
 - (void)findRoutesByStopName:(NSString *)param delegate:(id<ARFPostRequestDelegate>)delegate {
     self.delegate = delegate;
     [self postRequest:@{@"stopName": param}
@@ -52,16 +41,8 @@
     self.delegate = delegate;
     [self postRequest:@{@"routeId": param}
                 toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
-    //             delegate:delegate];
 }
-/*
- - (void)findDeparturesByRouteId:(NSNumber *)param {
- [self postRequest:@{@"routeId": param}
- toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
- }
- */
 
-//- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url delegate:(id)delegate {
 - (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
 
     //TODO add some setup to class initializer
@@ -89,14 +70,10 @@
     self.connectionDidFinish = NO;
     [self performSelector:@selector(setNetworkActivityIndicatorVisible:) withObject:@YES afterDelay:3.0]; //show the network indicator after 3 seconds
 }
-/*
-- (void)postRequest:(NSDictionary *)params toURL:(NSURL *)url {
-    [self postRequest:params toURL:url delegate:self];
-}
-*/
 
 - (void)setNetworkActivityIndicatorVisible:(NSNumber *)visible {
-    if (visible && self.connectionDidFinish) return;
+    if (visible && self.connectionDidFinish)
+        return;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:[visible boolValue]];
 }
 

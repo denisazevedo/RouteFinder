@@ -71,7 +71,6 @@ int const SEGMENT_TIMETABLE = 1;
 }
 
 - (void)clearTableView {
-    //Clear the table view
     [self.stops removeAllObjects];
     [self.weekdayTimes removeAllObjects];
     [self.saturdayTimes removeAllObjects];
@@ -81,7 +80,6 @@ int const SEGMENT_TIMETABLE = 1;
 
 
 - (IBAction)segmentAction:(UISegmentedControl *)sender {
-//    NSLog(@"SegmentControl changed: %d", sender.selectedSegmentIndex);
     
     if (sender.selectedSegmentIndex == SEGMENT_STOPS) {
         self.tableView.dataSource = self.stopsDatasource;
@@ -149,10 +147,13 @@ int const SEGMENT_TIMETABLE = 1;
         }
         self.isTimetableLoaded = YES;
         
-        //Add a "No time available" message to the section
-        if (self.weekdayTimes.count == 0) [self.weekdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-        if (self.saturdayTimes.count == 0) [self.saturdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-        if (self.sundayTimes.count == 0) [self.sundayTimes addObject:NO_TIME_AVAILABLE_MSG];
+        //Adds a "No time available" message to the section
+        if (self.weekdayTimes.count == 0)
+            [self.weekdayTimes addObject:NO_TIME_AVAILABLE_MSG];
+        if (self.saturdayTimes.count == 0)
+            [self.saturdayTimes addObject:NO_TIME_AVAILABLE_MSG];
+        if (self.sundayTimes.count == 0)
+            [self.sundayTimes addObject:NO_TIME_AVAILABLE_MSG];
     }
 
     [self.tableView reloadData];
@@ -170,8 +171,6 @@ int const SEGMENT_TIMETABLE = 1;
     
     if (self.route) {
         NSLog(@"%s routeId: %@", __PRETTY_FUNCTION__, self.route[KEY_ID]);
-//        [self.postRequestDelegate findStopsByRouteId:routeId delegate:self];
-        //[self.postRequestDelegate findDeparturesByRouteId:routeId delegate:self];
     }
 }
 
@@ -183,7 +182,6 @@ int const SEGMENT_TIMETABLE = 1;
     self.saturdayTimes = [[NSMutableArray alloc] init];
     self.sundayTimes = [[NSMutableArray alloc] init];
     
-//    self.postRequest = [[ARFPostRequest alloc] initWithDelegate:self];
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
 
     self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
@@ -195,14 +193,6 @@ int const SEGMENT_TIMETABLE = 1;
         [self.postRequestDelegate findStopsByRouteId:self.route[KEY_ID] delegate:self]; //TODO pass the datasource???
         [self.loadingIndicator startAnimating];
     }
-
-    //Test data
-//    [self addTimesToTableView:@[@{KEY_TIME: @"1:23"},
-//                                @{KEY_TIME: @"2:34"}] inSection:SECTION_WEEKDAYS];
-//    [self addTimesToTableView:@[@{KEY_TIME: @"3:45"}] inSection:SECTION_SATURDAYS];
-//    [self addTimesToTableView:@[@{KEY_TIME: @"4:56"},
-//                                @{KEY_TIME: @"5:00"}] inSection:SECTION_SUNDAYS];
-
 }
 
 @end

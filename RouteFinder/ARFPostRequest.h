@@ -15,14 +15,6 @@
 
 @interface ARFPostRequest : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
-/*
-//Designated initializer
-- (instancetype)initWithDelegate:(id<ARFPostRequestDelegate>)delegate;
-@property (assign) id<ARFPostRequestDelegate> delegate;
-- (void)findRoutesByStopName:(NSString *)param;
-- (void)findDeparturesByRouteId:(NSNumber *)param;
-*/
-
 - (void)findRoutesByStopName:(NSString *)param delegate:(id<ARFPostRequestDelegate>)delegate;
 - (void)findStopsByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate;
 - (void)findDeparturesByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate;

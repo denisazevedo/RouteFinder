@@ -46,7 +46,6 @@ NSString *const KEY_TIME = @"time";
 }
 
 - (void)clearTableView {
-    //Clear the table view
     [self.objects removeAllObjects];
     [self.tableView reloadData];
     [self refreshTableFooter:NO];
@@ -141,10 +140,6 @@ NSString *const KEY_TIME = @"time";
     self.searchBar.delegate = self;
     
     self.postRequestDelegate = [[ARFPostRequest alloc] init];
-    
-    //Test data
-//    [self addRoutesToTableView:@[@{KEY_ID: @22, KEY_SHORT_NAME: @"123", KEY_LONG_NAME: @"Agronomica"},
-//                                 @{KEY_ID: @35, KEY_SHORT_NAME: @"456", KEY_LONG_NAME: @"Trindade"}]];
 }
 
 #pragma mark - Segues

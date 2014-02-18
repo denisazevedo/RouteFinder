@@ -35,7 +35,8 @@ NSString * const CITY_NAME = @"Florianopolis";
                                                       longitude:coordinate.longitude];
     [self.geocoder reverseGeocodeLocation:location
                         completionHandler:^(NSArray *placemarks, NSError *error) {
-                            if (error) NSLog(@"%s Error: %@", __PRETTY_FUNCTION__, error);
+                            if (error)
+                                NSLog(@"%s Error: %@", __PRETTY_FUNCTION__, error);
                             else {
                                 [self reverseGeocodingDidComplete:placemarks];
                             }
@@ -44,7 +45,6 @@ NSString * const CITY_NAME = @"Florianopolis";
 
 - (void)reverseGeocodingDidComplete:(NSArray *)placemarks {
     CLPlacemark *placemark = [placemarks objectAtIndex:0];
-    //NSLog(@"Reverse address: %@", placemark.addressDictionary);
     
     self.streetName = placemark.addressDictionary[@"Thoroughfare"];
     NSLog(@"Reverse geocoding - Street name: %@", self.streetName);
@@ -94,7 +94,8 @@ const int SPAN_METERS = 2500;
 - (void)initializeMap { //Add annotation on Florianopolis city
     [self.geocoder geocodeAddressString:CITY_NAME
                       completionHandler:^(NSArray *placemarks, NSError *error) {
-                          if (error) NSLog(@"%s Error: %@", __PRETTY_FUNCTION__, error);
+                          if (error)
+                              NSLog(@"%s Error: %@", __PRETTY_FUNCTION__, error);
                           else {
                               [self addPinToPlacemark:[placemarks objectAtIndex:0]];
                           }
@@ -140,7 +141,6 @@ const int SPAN_METERS = 2500;
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     MKAnnotationView *annotationView = [views objectAtIndex:0];
     [self zoomToCoordinate:[annotationView.annotation coordinate]];
-    //[self confirmStreetForSearch];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
@@ -148,13 +148,5 @@ const int SPAN_METERS = 2500;
     [self confirmStreetForSearch];
 }
 
-/*
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    if (mapView.annotations.count > 0) {
-        MKPointAnnotation *annotation = [self.mapView.annotations objectAtIndex:0];
-        [self.mapView selectAnnotation:annotation animated:YES];
-    }
-}
-*/
 @end
 
