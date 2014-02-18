@@ -19,7 +19,7 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
-@property (weak, nonatomic) IBOutlet UILabel *footnoteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalRoutesFoundLabel;
 
 @end
 
@@ -40,7 +40,7 @@ NSString *const KEY_TIME = @"time";
 
 - (void)refreshTableFooter:(BOOL)isVisible {
     if (isVisible) {
-        self.footnoteLabel.text = [NSString stringWithFormat:@"%d route(s) found", [self.routes count]];
+        self.totalRoutesFoundLabel.text = [NSString stringWithFormat:@"%d route(s) found", [self.routes count]];
     }
     self.tableView.tableFooterView.hidden = !isVisible;
 }
@@ -88,7 +88,7 @@ NSString *const KEY_TIME = @"time";
 
 - (void)requestDidFail:(NSError *)error {
     [self.loadingIndicator stopAnimating];
-    self.footnoteLabel.text = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+    self.totalRoutesFoundLabel.text = [NSString stringWithFormat:@"%@", [error localizedDescription]];
     self.tableView.tableFooterView.hidden = NO;
 }
 

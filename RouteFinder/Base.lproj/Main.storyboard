@@ -124,10 +124,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="footnoteLabel" destination="FiA-qu-pDW" id="Rba-bV-E0f"/>
                         <outlet property="loadingIndicator" destination="VQ1-5L-EBf" id="GMz-Rl-CIg"/>
                         <outlet property="searchBar" destination="O8D-tn-zK3" id="JPe-b1-LBd"/>
                         <outlet property="tableView" destination="mLL-gJ-YKr" id="Hje-WY-Z6y"/>
+                        <outlet property="totalRoutesFoundLabel" destination="FiA-qu-pDW" id="pfV-Fc-Xsp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
