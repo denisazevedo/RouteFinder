@@ -163,6 +163,13 @@ int const SEGMENT_TIMETABLE = 1;
 
 - (void)requestDidFail:(NSError *)error {
     [self.loadingIndicator stopAnimating];
+    
+    NSString *msg = [NSString stringWithFormat:@"Connection failed!\nError: %@\nPlease check your connection settings", [error localizedDescription]];
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
+                                message:msg
+                               delegate:nil
+                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                      otherButtonTitles:nil] show];
 }
 
 #pragma mark - UIViewController Lifecycle

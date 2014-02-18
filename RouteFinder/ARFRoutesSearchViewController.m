@@ -90,6 +90,13 @@ NSString *const KEY_TIME = @"time";
     [self.loadingIndicator stopAnimating];
     self.totalRoutesFoundLabel.text = [NSString stringWithFormat:@"%@", [error localizedDescription]];
     self.tableView.tableFooterView.hidden = NO;
+    
+    NSString *msg = [NSString stringWithFormat:@"Connection failed!\nError: %@\nPlease check your connection settings", [error localizedDescription]];
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
+                                message:msg
+                               delegate:nil
+                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                      otherButtonTitles:nil] show];
 }
 
 #pragma mark Table View
