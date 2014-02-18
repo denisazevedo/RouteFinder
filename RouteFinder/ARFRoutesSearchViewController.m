@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Denis C de Azevedo. All rights reserved.
 //
 
-#import "ARFMasterViewController.h"
-#import "ARFDetailViewController.h"
+#import "ARFRoutesSearchViewController.h"
+#import "ARFRouteDetailsViewController.h"
 #import "ARFMapViewController.h"
 
-@interface ARFMasterViewController ()
+@interface ARFRoutesSearchViewController ()
 
 //Connection delegate
 @property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation ARFMasterViewController
+@implementation ARFRoutesSearchViewController
 
 NSString *const KEY_SHORT_NAME = @"shortName";
 NSString *const KEY_LONG_NAME = @"longName";

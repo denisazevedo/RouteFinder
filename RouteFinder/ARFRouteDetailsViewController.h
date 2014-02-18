@@ -17,7 +17,7 @@
 @end
 
 
-@interface ARFDetailViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
+@interface ARFRouteDetailsViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
 
 @property (strong, nonatomic) NSDictionary *route;
 enum {

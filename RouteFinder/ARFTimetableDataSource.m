@@ -7,7 +7,7 @@
 //
 
 #import "ARFTimetableDataSource.h"
-#import "ARFDetailViewController.h"
+#import "ARFRouteDetailsViewController.h"
 
 @interface ARFTimetableDataSource ()
 @property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;

@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Denis C de Azevedo. All rights reserved.
 //
 
-#import "ARFDetailViewController.h"
-#import "ARFMasterViewController.h"
+#import "ARFRouteDetailsViewController.h"
+#import "ARFRoutesSearchViewController.h"
 #import "ARFStopsDatasSource.h"
 #import "ARFTimetableDataSource.h"
 
-@interface ARFDetailViewController ()
+@interface ARFRouteDetailsViewController ()
 
 @property (strong, nonatomic) ARFPostRequest *postRequestDelegate;
 
@@ -33,7 +33,7 @@
 - (void)configureView;
 @end
 
-@implementation ARFDetailViewController
+@implementation ARFRouteDetailsViewController
 
 #pragma mark - Constants
 

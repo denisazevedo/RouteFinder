@@ -7,7 +7,7 @@
 //
 
 #import "ARFStopsDatasSource.h"
-#import "ARFDetailViewController.h"
+#import "ARFRouteDetailsViewController.h"
 
 @interface ARFStopsDatasSource ()
 @property (nonatomic, strong) id<ARFTableDatasourceDelegate> delegate;

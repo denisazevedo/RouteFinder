@@ -19,8 +19,8 @@
 		6A787ED618AB11F100437194 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787ED518AB11F100437194 /* main.m */; };
 		6A787EDA18AB11F100437194 /* ARFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787ED918AB11F100437194 /* ARFAppDelegate.m */; };
 		6A787EDD18AB11F100437194 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A787EDB18AB11F100437194 /* Main.storyboard */; };
-		6A787EE018AB11F100437194 /* ARFMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787EDF18AB11F100437194 /* ARFMasterViewController.m */; };
-		6A787EE318AB11F100437194 /* ARFDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787EE218AB11F100437194 /* ARFDetailViewController.m */; };
+		6A787EE018AB11F100437194 /* ARFRoutesSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787EDF18AB11F100437194 /* ARFRoutesSearchViewController.m */; };
+		6A787EE318AB11F100437194 /* ARFRouteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A787EE218AB11F100437194 /* ARFRouteDetailsViewController.m */; };
 		6A787EE518AB11F100437194 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A787EE418AB11F100437194 /* Images.xcassets */; };
 		6A787EEC18AB11F100437194 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787EEB18AB11F100437194 /* XCTest.framework */; };
 		6A787EED18AB11F100437194 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A787EC918AB11F100437194 /* Foundation.framework */; };
@@ -60,10 +60,10 @@
 		6A787ED818AB11F100437194 /* ARFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFAppDelegate.h; sourceTree = "<group>"; };
 		6A787ED918AB11F100437194 /* ARFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFAppDelegate.m; sourceTree = "<group>"; };
 		6A787EDC18AB11F100437194 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6A787EDE18AB11F100437194 /* ARFMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFMasterViewController.h; sourceTree = "<group>"; };
-		6A787EDF18AB11F100437194 /* ARFMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFMasterViewController.m; sourceTree = "<group>"; };
-		6A787EE118AB11F100437194 /* ARFDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFDetailViewController.h; sourceTree = "<group>"; };
-		6A787EE218AB11F100437194 /* ARFDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFDetailViewController.m; sourceTree = "<group>"; };
+		6A787EDE18AB11F100437194 /* ARFRoutesSearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFRoutesSearchViewController.h; sourceTree = "<group>"; };
+		6A787EDF18AB11F100437194 /* ARFRoutesSearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFRoutesSearchViewController.m; sourceTree = "<group>"; };
+		6A787EE118AB11F100437194 /* ARFRouteDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFRouteDetailsViewController.h; sourceTree = "<group>"; };
+		6A787EE218AB11F100437194 /* ARFRouteDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFRouteDetailsViewController.m; sourceTree = "<group>"; };
 		6A787EE418AB11F100437194 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6A787EEA18AB11F100437194 /* RouteFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RouteFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A787EEB18AB11F100437194 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -146,10 +146,10 @@
 				6A5BC16718AD45B300CDAD91 /* Datasources */,
 				6A3777B518ADF9A500638510 /* ARFMapViewController.h */,
 				6A3777B618ADF9A500638510 /* ARFMapViewController.m */,
-				6A787EDE18AB11F100437194 /* ARFMasterViewController.h */,
-				6A787EDF18AB11F100437194 /* ARFMasterViewController.m */,
-				6A787EE118AB11F100437194 /* ARFDetailViewController.h */,
-				6A787EE218AB11F100437194 /* ARFDetailViewController.m */,
+				6A787EDE18AB11F100437194 /* ARFRoutesSearchViewController.h */,
+				6A787EDF18AB11F100437194 /* ARFRoutesSearchViewController.m */,
+				6A787EE118AB11F100437194 /* ARFRouteDetailsViewController.h */,
+				6A787EE218AB11F100437194 /* ARFRouteDetailsViewController.m */,
 				6A61123018AC027B00DB77DB /* ARFPostRequest.h */,
 				6A61123118AC027B00DB77DB /* ARFPostRequest.m */,
 				6A787EE418AB11F100437194 /* Images.xcassets */,
@@ -237,6 +237,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Denis C de Azevedo";
 				TargetAttributes = {
+					6A787EC518AB11F100437194 = {
+						DevelopmentTeam = RJVYQV9XZY;
+					};
 					6A787EE918AB11F100437194 = {
 						TestTargetID = 6A787EC518AB11F100437194;
 					};
@@ -291,9 +294,9 @@
 				6A61123518AC856600DB77DB /* ARFStopsDatasSource.m in Sources */,
 				6A787ED618AB11F100437194 /* main.m in Sources */,
 				6A61123818AC962A00DB77DB /* ARFTimetableDataSource.m in Sources */,
-				6A787EE018AB11F100437194 /* ARFMasterViewController.m in Sources */,
+				6A787EE018AB11F100437194 /* ARFRoutesSearchViewController.m in Sources */,
 				6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */,
-				6A787EE318AB11F100437194 /* ARFDetailViewController.m in Sources */,
+				6A787EE318AB11F100437194 /* ARFRouteDetailsViewController.m in Sources */,
 				6A3777B718ADF9A500638510 /* ARFMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,10 +424,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RouteFinder/RouteFinder-Prefix.pch";
 				INFOPLIST_FILE = "RouteFinder/RouteFinder-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -434,10 +440,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RouteFinder/RouteFinder-Prefix.pch";
 				INFOPLIST_FILE = "RouteFinder/RouteFinder-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

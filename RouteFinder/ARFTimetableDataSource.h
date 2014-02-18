@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ARFDetailViewController.h"
+#import "ARFRouteDetailsViewController.h"
 
 @interface ARFTimetableDataSource : NSObject <UITableViewDataSource>
 
