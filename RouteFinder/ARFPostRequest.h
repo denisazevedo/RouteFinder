@@ -10,6 +10,7 @@
 
 @protocol ARFPostRequestDelegate <NSObject>
 - (void)requestDidComplete:(NSArray *)rows;
+@optional
 - (void)requestDidFail:(NSError *)error;
 @end
 

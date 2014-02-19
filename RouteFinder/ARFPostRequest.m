@@ -93,9 +93,7 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
     NSArray *rows = [json objectForKey:@"rows"];
     
-    if ([self.delegate respondsToSelector:@selector(requestDidComplete:)]) {
-        [self.delegate requestDidComplete:rows];
-    }
+    [self.delegate requestDidComplete:rows];
     
     self.connection = nil;
     self.responseData = nil;
