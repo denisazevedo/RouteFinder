@@ -65,6 +65,7 @@ int const SEGMENT_TIMETABLE = 1;
         self.tableView.dataSource = self.timetableDatasource;
         if (!self.isTimetableLoaded && self.route.routeId) {
             [self.loadingIndicator startAnimating];
+            self.postRequestHelper = [[ARFPostRequest alloc] init];
             [self.postRequestHelper findDeparturesByRouteId:@(self.route.routeId) delegate:self];
         }
     }
@@ -99,16 +100,22 @@ int const SEGMENT_TIMETABLE = 1;
 
 #pragma mark ARFPostRequestDelegate
 
-- (void)requestDidComplete:(NSArray *)rows {
-    //NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+- (void)request:(RequestType)request didCompleteWithData:(NSArray *)data {
+    //NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [data count]);
     
-    if (self.segmentedControl.selectedSegmentIndex == SEGMENT_STOPS) {
-        [self processStopsResponse:rows];
-    } else if (self.segmentedControl.selectedSegmentIndex == SEGMENT_TIMETABLE) {
-        [self processTimetableResponse:rows];
+    if (request == REQUEST_STOPS_BY_ROUTE_ID) {
+        [self processStopsResponse:data];
+        if (self.segmentedControl.selectedSegmentIndex == SEGMENT_STOPS) {
+            //reload the table if the user is viewing the correct segment
+            [self.tableView reloadData];
+        }
+    } else if (request == REQUEST_DEPARTURES_BY_ROUTE_ID) {
+        [self processTimetableResponse:data];
+        if (self.segmentedControl.selectedSegmentIndex == SEGMENT_TIMETABLE) {
+            [self.tableView reloadData];
+        }
     }
 
-    [self.tableView reloadData];
     [self.loadingIndicator stopAnimating];
 }
 

@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *responseData;
 @property BOOL connectionDidFinish;
+@property (nonatomic) RequestType requestType;
 
 @end
 
@@ -27,18 +28,21 @@
 
 - (void)findRoutesByStopName:(NSString *)param delegate:(id<ARFPostRequestDelegate>)delegate {
     self.delegate = delegate;
+    self.requestType = REQUEST_ROUTES_BY_STOP_NAME;
     [self postRequest:@{@"stopName": param}
                 toURL:[NSURL URLWithString:URL_ROUTES_BY_STOP_NAME]];
 }
 
 - (void)findStopsByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate {
     self.delegate = delegate;
+    self.requestType = REQUEST_STOPS_BY_ROUTE_ID;
     [self postRequest:@{@"routeId": param}
                 toURL:[NSURL URLWithString:URL_STOPS_BY_ROUTE_ID]];
 }
 
 - (void)findDeparturesByRouteId:(NSNumber *)param delegate:(id<ARFPostRequestDelegate>)delegate {
     self.delegate = delegate;
+    self.requestType = REQUEST_DEPARTURES_BY_ROUTE_ID;
     [self postRequest:@{@"routeId": param}
                 toURL:[NSURL URLWithString:URL_DEPARTURES_BY_ROUTE_ID]];
 }
@@ -93,7 +97,7 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&error];
     NSArray *rows = [json objectForKey:@"rows"];
     
-    [self.delegate requestDidComplete:rows];
+    [self.delegate request:self.requestType didCompleteWithData:rows];
     
     self.connection = nil;
     self.responseData = nil;

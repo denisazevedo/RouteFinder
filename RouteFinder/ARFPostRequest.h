@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    REQUEST_ROUTES_BY_STOP_NAME,
+    REQUEST_STOPS_BY_ROUTE_ID,
+    REQUEST_DEPARTURES_BY_ROUTE_ID
+} RequestType;
+
 @protocol ARFPostRequestDelegate <NSObject>
-- (void)requestDidComplete:(NSArray *)rows;
+- (void)request:(RequestType)request didCompleteWithData:(NSArray *)data;
 @optional
 - (void)requestDidFail:(NSError *)error;
 @end

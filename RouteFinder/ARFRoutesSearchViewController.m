@@ -74,11 +74,11 @@
 
 #pragma mark ARFPostRequestDelegate
 
-- (void)requestDidComplete:(NSArray *)rows {
-//    NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+- (void)request:(RequestType)request didCompleteWithData:(NSArray *)data {
+    //NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [data count]);
     
     NSMutableArray *routes = [[NSMutableArray alloc] init];
-    for (NSDictionary *routeDictionary in rows) {
+    for (NSDictionary *routeDictionary in data) {
         ARFRoute *route = [[ARFRoute alloc] initFromDictionary:routeDictionary];
         [routes addObject:route];
     }
