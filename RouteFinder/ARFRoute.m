@@ -53,7 +53,7 @@ NSString *const KEY_SUNDAY = @"SUNDAY";
 
 //Designated initializer
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
-    self = [self init];
+    self = [super init];
     if (self) {
         self.routeId = [dictionary[KEY_ID] integerValue];
         self.shortName = dictionary[KEY_SHORT_NAME];

@@ -15,7 +15,7 @@
 
 //Designated initializer
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
-    self = [self init];
+    self = [super init];
     if (self) {
         self.stopId = [dictionary[KEY_ID] integerValue];
         self.name = [dictionary[KEY_NAME] capitalizedString];

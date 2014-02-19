@@ -15,7 +15,7 @@
 
 //Designated initializer
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
-    self = [self init];
+    self = [super init];
     if (self) {
         self.departureId = [dictionary[KEY_ID] integerValue];
         self.calendar = dictionary[KEY_CALENDAR];

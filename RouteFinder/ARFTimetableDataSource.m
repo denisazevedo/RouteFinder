@@ -18,7 +18,7 @@
 
 //Designated initializer
 - (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {
-    self = [self init]; //super's designated initializer
+    self = [super init];
     if (self) {
         self.delegate = delegate;
     }
