@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6A3777B418ADF72400638510 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A3777B318ADF72400638510 /* MapKit.framework */; };
 		6A3777B718ADF9A500638510 /* ARFMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3777B618ADF9A500638510 /* ARFMapViewController.m */; };
+		6A4613D718B4599D005EED35 /* ARFRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4613D618B4599D005EED35 /* ARFRoute.m */; };
+		6A4613DB18B462C5005EED35 /* ARFStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4613DA18B462C5005EED35 /* ARFStop.m */; };
+		6A4613DE18B464D9005EED35 /* ARFDeparture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4613DD18B464D9005EED35 /* ARFDeparture.m */; };
 		6A61123218AC027B00DB77DB /* ARFPostRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123118AC027B00DB77DB /* ARFPostRequest.m */; };
 		6A61123518AC856600DB77DB /* ARFStopsDatasSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123418AC856600DB77DB /* ARFStopsDatasSource.m */; };
 		6A61123818AC962A00DB77DB /* ARFTimetableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A61123718AC962A00DB77DB /* ARFTimetableDataSource.m */; };
@@ -43,6 +46,12 @@
 		6A3777B318ADF72400638510 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6A3777B518ADF9A500638510 /* ARFMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFMapViewController.h; sourceTree = "<group>"; };
 		6A3777B618ADF9A500638510 /* ARFMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFMapViewController.m; sourceTree = "<group>"; };
+		6A4613D518B4599D005EED35 /* ARFRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFRoute.h; sourceTree = "<group>"; };
+		6A4613D618B4599D005EED35 /* ARFRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFRoute.m; sourceTree = "<group>"; };
+		6A4613D918B462C5005EED35 /* ARFStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFStop.h; sourceTree = "<group>"; };
+		6A4613DA18B462C5005EED35 /* ARFStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFStop.m; sourceTree = "<group>"; };
+		6A4613DC18B464D9005EED35 /* ARFDeparture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFDeparture.h; sourceTree = "<group>"; };
+		6A4613DD18B464D9005EED35 /* ARFDeparture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFDeparture.m; sourceTree = "<group>"; };
 		6A61123018AC027B00DB77DB /* ARFPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFPostRequest.h; sourceTree = "<group>"; };
 		6A61123118AC027B00DB77DB /* ARFPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFPostRequest.m; sourceTree = "<group>"; };
 		6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFStopsDatasSource.h; sourceTree = "<group>"; };
@@ -97,6 +106,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A4613D818B459A3005EED35 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6A4613D518B4599D005EED35 /* ARFRoute.h */,
+				6A4613D618B4599D005EED35 /* ARFRoute.m */,
+				6A4613D918B462C5005EED35 /* ARFStop.h */,
+				6A4613DA18B462C5005EED35 /* ARFStop.m */,
+				6A4613DC18B464D9005EED35 /* ARFDeparture.h */,
+				6A4613DD18B464D9005EED35 /* ARFDeparture.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6A4613DF18B481DA005EED35 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6A61123018AC027B00DB77DB /* ARFPostRequest.h */,
+				6A61123118AC027B00DB77DB /* ARFPostRequest.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		6A5BC16718AD45B300CDAD91 /* Datasources */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				6A787EDB18AB11F100437194 /* Main.storyboard */,
+				6A4613D818B459A3005EED35 /* Models */,
+				6A4613DF18B481DA005EED35 /* Helpers */,
 				6A5BC16718AD45B300CDAD91 /* Datasources */,
 				6A3777B518ADF9A500638510 /* ARFMapViewController.h */,
 				6A3777B618ADF9A500638510 /* ARFMapViewController.m */,
@@ -150,8 +183,6 @@
 				6A787EDF18AB11F100437194 /* ARFRoutesSearchViewController.m */,
 				6A787EE118AB11F100437194 /* ARFRouteDetailsViewController.h */,
 				6A787EE218AB11F100437194 /* ARFRouteDetailsViewController.m */,
-				6A61123018AC027B00DB77DB /* ARFPostRequest.h */,
-				6A61123118AC027B00DB77DB /* ARFPostRequest.m */,
 				6A787EE418AB11F100437194 /* Images.xcassets */,
 				6A787ED018AB11F100437194 /* Supporting Files */,
 			);
@@ -291,7 +322,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A787EDA18AB11F100437194 /* ARFAppDelegate.m in Sources */,
+				6A4613DB18B462C5005EED35 /* ARFStop.m in Sources */,
+				6A4613DE18B464D9005EED35 /* ARFDeparture.m in Sources */,
 				6A61123518AC856600DB77DB /* ARFStopsDatasSource.m in Sources */,
+				6A4613D718B4599D005EED35 /* ARFRoute.m in Sources */,
 				6A787ED618AB11F100437194 /* main.m in Sources */,
 				6A61123818AC962A00DB77DB /* ARFTimetableDataSource.m in Sources */,
 				6A787EE018AB11F100437194 /* ARFRoutesSearchViewController.m in Sources */,

@@ -11,12 +11,4 @@
 
 @interface ARFRoutesSearchViewController : UITableViewController <ARFPostRequestDelegate, UISearchBarDelegate>
 
-//Constants
-extern NSString *const KEY_SHORT_NAME;
-extern NSString *const KEY_LONG_NAME;
-extern NSString *const KEY_ID;
-extern NSString *const KEY_NAME;
-extern NSString *const KEY_CALENDAR;
-extern NSString *const KEY_TIME;
-
 @end

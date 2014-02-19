@@ -10,6 +10,8 @@
 #import "ARFRoutesSearchViewController.h"
 #import "ARFStopsDatasSource.h"
 #import "ARFTimetableDataSource.h"
+#import "ARFStop.h"
+#import "ARFDeparture.h"
 
 @interface ARFRouteDetailsViewController ()
 
@@ -22,56 +24,37 @@
 //TODO add a table footer to details table
 @property (strong, nonatomic) id<UITableViewDataSource> stopsDatasource;
 @property (strong, nonatomic) id<UITableViewDataSource> timetableDatasource;
-//Table view data
-@property (strong, nonatomic) NSMutableArray *stops; //Array of NSString
-//TODO Use only one NSDictionary?
-@property (readwrite, strong, nonatomic) NSMutableArray *weekdayTimes; //Array of NSString
-@property (readwrite, strong, nonatomic) NSMutableArray *saturdayTimes; //Array of NSString
-@property (readwrite, strong, nonatomic) NSMutableArray *sundayTimes; //Array of NSString
 @property (nonatomic) BOOL isTimetableLoaded;
 
-- (void)updateView;
 @end
 
 @implementation ARFRouteDetailsViewController
 
-#pragma mark - Constants
-
-NSString *const KEY_WEEK_DAY = @"WEEKDAY";
-NSString *const KEY_SATURDAY = @"SATURDAY";
-NSString *const KEY_SUNDAY = @"SUNDAY";
-
-NSString *const NO_TIME_AVAILABLE_MSG = @"No time available";
-
+//Constants
 int const SEGMENT_STOPS = 0;
 int const SEGMENT_TIMETABLE = 1;
 
 #pragma mark - Managing the detail item
 
-- (void)setRoute:(id)newRoute
-{
-    if (_route != newRoute) {
-        _route = newRoute;
+- (void)setRoute:(ARFRoute *)route {
+    if (_route.routeId != route.routeId) {
+        _route = route;
         [self updateView];
     }
 }
 
-- (void)updateView
-{
+- (void)updateView {
     if (self.route) {
-        self.title = [self.route[KEY_LONG_NAME] capitalizedString];
+        self.title = [self.route.longName capitalizedString];
         [self clearTableView];
     }
 }
 
 - (void)clearTableView {
-    [self.stops removeAllObjects];
-    [self.weekdayTimes removeAllObjects];
-    [self.saturdayTimes removeAllObjects];
-    [self.sundayTimes removeAllObjects];
+    [self.route.stops removeAllObjects];
+    [self.route removeAllDepartures];
     [self.tableView reloadData];
 }
-
 
 - (IBAction)segmentAction:(UISegmentedControl *)sender {
     
@@ -80,9 +63,9 @@ int const SEGMENT_TIMETABLE = 1;
         
     } else if (sender.selectedSegmentIndex == SEGMENT_TIMETABLE) { //Timetable
         self.tableView.dataSource = self.timetableDatasource;
-        if (!self.isTimetableLoaded && self.route[KEY_ID]) {
+        if (!self.isTimetableLoaded && self.route.routeId) {
             [self.loadingIndicator startAnimating];
-            [self.postRequestHelper findDeparturesByRouteId:self.route[KEY_ID] delegate:self];
+            [self.postRequestHelper findDeparturesByRouteId:@(self.route.routeId) delegate:self];
         }
     }
     
@@ -90,23 +73,23 @@ int const SEGMENT_TIMETABLE = 1;
 }
 
 - (NSMutableArray *)objects {
-    return self.stops;
+    return self.route.stops;
 }
 
 - (NSMutableArray *)objectsInSection:(NSInteger)section {
     NSMutableArray *array;
     switch (section) {
         case SECTION_WEEKDAYS:
-            array = self.weekdayTimes;
+            array = self.route.weekdayDepartures;
             break;
         case SECTION_SATURDAYS:
-            array = self.saturdayTimes;
+            array = self.route.saturdayDepartures;
             break;
         case SECTION_SUNDAYS:
-            array = self.sundayTimes;
+            array = self.route.sundayDepartures;
             break;
         case SECTION_STOPS:
-            array = self.stops;
+            array = self.route.stops;
             break;
     }
     return array;
@@ -117,7 +100,7 @@ int const SEGMENT_TIMETABLE = 1;
 #pragma mark ARFPostRequestDelegate
 
 - (void)requestDidComplete:(NSArray *)rows {
-    NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+    //NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
     
     if (self.segmentedControl.selectedSegmentIndex == SEGMENT_STOPS) {
         [self processStopsResponse:rows];
@@ -132,33 +115,20 @@ int const SEGMENT_TIMETABLE = 1;
 - (void)processStopsResponse:(NSArray *)stops {
     self.tableView.dataSource = self.stopsDatasource;
     
-    for (NSDictionary *stop in stops) {
-        NSString *name = stop[KEY_NAME];
-        [self.stops addObject:[name capitalizedString]];
+    for (NSDictionary *dictionary in stops) {
+        ARFStop *stop = [[ARFStop alloc] initFromDictionary:dictionary];
+        [self.route.stops addObject:stop];
     }
 }
 
 - (void)processTimetableResponse:(NSArray *)timetable {
     self.tableView.dataSource = self.timetableDatasource;
     
-    for (NSDictionary *time in timetable) {
-        if ([time[KEY_CALENDAR] isEqualToString:KEY_WEEK_DAY]) {
-            [self.weekdayTimes addObject:time[KEY_TIME]];
-        } else if ([time[KEY_CALENDAR] isEqualToString:KEY_SATURDAY]) {
-            [self.saturdayTimes addObject:time[KEY_TIME]];
-        } else if ([time[KEY_CALENDAR] isEqualToString:KEY_SUNDAY]) {
-            [self.sundayTimes addObject:time[KEY_TIME]];
-        }
+    for (NSDictionary *dictionary in timetable) {
+        ARFDeparture *departure = [[ARFDeparture alloc] initFromDictionary:dictionary];
+        [self.route addDeparture:departure];
     }
-    self.isTimetableLoaded = YES;
-    
-    //Adds a "No time available" message to the section
-    if (self.weekdayTimes.count == 0)
-        [self.weekdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-    if (self.saturdayTimes.count == 0)
-        [self.saturdayTimes addObject:NO_TIME_AVAILABLE_MSG];
-    if (self.sundayTimes.count == 0)
-        [self.sundayTimes addObject:NO_TIME_AVAILABLE_MSG];
+    self.isTimetableLoaded = YES; //To handle the network activity indicator
 }
 
 - (void)requestDidFail:(NSError *)error {
@@ -176,20 +146,11 @@ int const SEGMENT_TIMETABLE = 1;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    if (self.route) {
-        NSLog(@"%s routeId: %@", __PRETTY_FUNCTION__, self.route[KEY_ID]);
-    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.stops = [[NSMutableArray alloc] init];
-    self.weekdayTimes = [[NSMutableArray alloc] init];
-    self.saturdayTimes = [[NSMutableArray alloc] init];
-    self.sundayTimes = [[NSMutableArray alloc] init];
-    
     self.postRequestHelper = [[ARFPostRequest alloc] init];
 
     self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
@@ -198,7 +159,7 @@ int const SEGMENT_TIMETABLE = 1;
     self.tableView.dataSource = self.stopsDatasource;
 
     if (self.route) {
-        [self.postRequestHelper findStopsByRouteId:self.route[KEY_ID] delegate:self]; //TODO pass the datasource???
+        [self.postRequestHelper findStopsByRouteId:@(self.route.routeId) delegate:self]; //TODO pass the datasource???
         [self.loadingIndicator startAnimating];
     }
 }

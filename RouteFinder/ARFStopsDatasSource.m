@@ -8,6 +8,7 @@
 
 #import "ARFStopsDatasSource.h"
 #import "ARFRouteDetailsViewController.h"
+#import "ARFStop.h"
 
 @interface ARFStopsDatasSource ()
 @property (weak, nonatomic) id<ARFTableDatasourceDelegate> delegate;
@@ -35,14 +36,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
 
-    NSString *name;
+    ARFStop *stop = nil;
     if ([self.delegate respondsToSelector:@selector(objects)]) {
-        name = [[self.delegate objects] objectAtIndex:indexPath.row];
+        stop = [[self.delegate objects] objectAtIndex:indexPath.row];
     } else {
-        name = [[self.delegate objectsInSection:SECTION_STOPS] objectAtIndex:indexPath.row];
+        stop = [[self.delegate objectsInSection:SECTION_STOPS] objectAtIndex:indexPath.row];
     }
    
-    cell.textLabel.text = name;
+    cell.textLabel.text = stop.name;
     if (!cell.textLabel.enabled)
         cell.textLabel.enabled = YES;
     return cell;

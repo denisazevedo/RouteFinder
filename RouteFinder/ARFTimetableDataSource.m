@@ -8,6 +8,7 @@
 
 #import "ARFTimetableDataSource.h"
 #import "ARFRouteDetailsViewController.h"
+#import "ARFDeparture.h"
 
 @interface ARFTimetableDataSource ()
 @property (weak, nonatomic) id<ARFTableDatasourceDelegate> delegate;
@@ -27,23 +28,23 @@
 #pragma mark Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    BOOL hasDeparturesOnWeekdays = [[self.delegate objectsInSection:SECTION_WEEKDAYS] count] > 0;
+    BOOL hasDeparturesOnSaturdays = [[self.delegate objectsInSection:SECTION_SATURDAYS] count] > 0;
+    BOOL hasDeparturesOnSundays = [[self.delegate objectsInSection:SECTION_SUNDAYS] count] > 0;
+    return hasDeparturesOnWeekdays + hasDeparturesOnSaturdays + hasDeparturesOnSundays;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self.delegate objectsInSection:section] count];
 }
- 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
     
     NSMutableArray *rows = [self.delegate objectsInSection:indexPath.section];
+    ARFDeparture *departure = [rows objectAtIndex:indexPath.row];
     
-    NSString *time = [rows objectAtIndex:indexPath.row];
-    cell.textLabel.text = time;
-    if ([time isEqualToString:NO_TIME_AVAILABLE_MSG]) {
-        cell.textLabel.enabled = NO;
-    }
+    cell.textLabel.text = departure.time;
     return cell;
  }
 

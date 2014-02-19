@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
+#import "ARFRoute.h"
 
 @protocol ARFTableDatasourceDelegate <NSObject>
 @required
@@ -19,7 +20,8 @@
 
 @interface ARFRouteDetailsViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
 
-@property (strong, nonatomic) NSDictionary *route;
+@property (strong, nonatomic) ARFRoute *route;
+
 enum {
     //Timetable
     SECTION_WEEKDAYS,
@@ -28,7 +30,5 @@ enum {
     //Stops
     SECTION_STOPS,
 };
-
-extern NSString *const NO_TIME_AVAILABLE_MSG;
 
 @end

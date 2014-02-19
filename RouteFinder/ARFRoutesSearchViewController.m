@@ -9,13 +9,14 @@
 #import "ARFRoutesSearchViewController.h"
 #import "ARFRouteDetailsViewController.h"
 #import "ARFMapViewController.h"
+#import "ARFRoute.h"
 
 @interface ARFRoutesSearchViewController ()
 
 //Connection helper
 @property (strong, nonatomic) ARFPostRequest *postRequestHelper;
 //Table view data
-@property (strong, nonatomic) NSMutableArray *routes; //array of NSDictionary
+@property (strong, nonatomic) NSMutableArray *routes; //array of ARFRoute
 //Outlets
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -24,13 +25,6 @@
 @end
 
 @implementation ARFRoutesSearchViewController
-
-NSString *const KEY_SHORT_NAME = @"shortName";
-NSString *const KEY_LONG_NAME = @"longName";
-NSString *const KEY_ID = @"id";
-NSString *const KEY_NAME = @"name";
-NSString *const KEY_CALENDAR = @"calendar";
-NSString *const KEY_TIME = @"time";
 
 - (void)addRoutesToTableView:(NSArray *)routes {
     [self.routes addObjectsFromArray:routes];
@@ -82,8 +76,15 @@ NSString *const KEY_TIME = @"time";
 
 - (void)requestDidComplete:(NSArray *)rows {
 //    NSLog(@"%s Rows received: %d", __PRETTY_FUNCTION__, [rows count]);
+    
+    NSMutableArray *routes = [[NSMutableArray alloc] init];
+    for (NSDictionary *routeDictionary in rows) {
+        ARFRoute *route = [[ARFRoute alloc] initFromDictionary:routeDictionary];
+        [routes addObject:route];
+    }
+    
     [self.loadingIndicator stopAnimating];
-    [self addRoutesToTableView:rows];
+    [self addRoutesToTableView:routes];
 }
 
 - (void)requestDidFail:(NSError *)error {
@@ -112,10 +113,9 @@ NSString *const KEY_TIME = @"time";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDictionary *route = self.routes[indexPath.row];
-    
-    cell.textLabel.text = route[KEY_SHORT_NAME];
-    cell.detailTextLabel.text = [route[KEY_LONG_NAME] capitalizedString];
+    ARFRoute *route = self.routes[indexPath.row];
+    cell.textLabel.text = route.shortName;
+    cell.detailTextLabel.text = [route.longName capitalizedString];
     return cell;
 }
 
@@ -143,16 +143,15 @@ NSString *const KEY_TIME = @"time";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self refreshTableFooter:NO];
-    
     self.searchBar.delegate = self;
-    
     self.postRequestHelper = [[ARFPostRequest alloc] init];
 }
 
 #pragma mark - Segues
 
-- (IBAction)unwindToMaster:(UIStoryboardSegue *)segue {
+- (IBAction)unwindToMaster:(UIStoryboardSegue *)segue { //Called from Map View
     
     ARFMapViewController *mapViewController = [segue sourceViewController];
     NSString *streetName = mapViewController.streetName;
@@ -166,7 +165,7 @@ NSString *const KEY_TIME = @"time";
 
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDictionary *route = self.routes[indexPath.row];
+        ARFRoute *route = self.routes[indexPath.row];
         
         [[segue destinationViewController] setRoute:route];
     }
