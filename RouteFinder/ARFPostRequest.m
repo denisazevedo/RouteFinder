@@ -10,7 +10,7 @@
 
 @interface ARFPostRequest ()
 
-@property (assign) id<ARFPostRequestDelegate> delegate;
+@property (weak, nonatomic) id<ARFPostRequestDelegate> delegate;
 //Connection
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *responseData;
