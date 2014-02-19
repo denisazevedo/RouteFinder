@@ -11,37 +11,30 @@
 #import "ARFStop.h"
 
 @interface ARFStopsDatasSource ()
-@property (weak, nonatomic) id<ARFTableDatasourceDelegate> delegate;
+@property (weak, nonatomic) id<ARFRouteDetailsTableDatasource> datasource;
 @end
 
 @implementation ARFStopsDatasSource
 
 //Designated initializer
-- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {
+- (instancetype)initWithDatasource:(id<ARFRouteDetailsTableDatasource>)datasource {
     self = [super init];
     if (self) {
-        self.delegate = delegate;
+        self.datasource = datasource;
     }
     return self;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self.delegate respondsToSelector:@selector(objects)]) {
-        return [[self.delegate objects] count];
-    } else {
-        return [[self.delegate objectsInSection:SECTION_STOPS] count];
-    }
+    ARFRoute *route = [self.datasource route];
+    return [route.stops count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
 
-    ARFStop *stop = nil;
-    if ([self.delegate respondsToSelector:@selector(objects)]) {
-        stop = [[self.delegate objects] objectAtIndex:indexPath.row];
-    } else {
-        stop = [[self.delegate objectsInSection:SECTION_STOPS] objectAtIndex:indexPath.row];
-    }
+    ARFRoute *route = [self.datasource route];
+    ARFStop *stop = [route.stops objectAtIndex:indexPath.row];
    
     cell.textLabel.text = stop.name;
     if (!cell.textLabel.enabled)

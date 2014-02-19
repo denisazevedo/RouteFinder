@@ -45,6 +45,17 @@ NSString *const KEY_SUNDAY = @"SUNDAY";
     [self.sundayDepartures removeAllObjects];
 }
 
+- (NSMutableArray *)departuresFromCalendar:(CalendarType)calendar {
+    switch (calendar) {
+        case WEEKDAYS:
+            return self.weekdayDepartures;
+        case SATURDAYS:
+            return self.saturdayDepartures;
+        case SUNDAYS:
+            return self.sundayDepartures;
+    }
+}
+
 //TODO To implement...
 //- (BOOL)isEqual:(id)object {
 

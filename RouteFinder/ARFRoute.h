@@ -23,6 +23,7 @@
 
 - (void)addDeparture:(ARFDeparture *)departure;
 - (void)removeAllDepartures;
+- (NSMutableArray *)departuresFromCalendar:(CalendarType)calendar;
 
 //Designated initializer
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;

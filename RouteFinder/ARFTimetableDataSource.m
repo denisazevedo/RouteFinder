@@ -11,16 +11,16 @@
 #import "ARFDeparture.h"
 
 @interface ARFTimetableDataSource ()
-@property (weak, nonatomic) id<ARFTableDatasourceDelegate> delegate;
+@property (weak, nonatomic) id<ARFRouteDetailsTableDatasource> datasource;
 @end
 
 @implementation ARFTimetableDataSource
 
 //Designated initializer
-- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate {
+- (instancetype)initWithDatasource:(id<ARFRouteDetailsTableDatasource>)datasource {
     self = [super init];
     if (self) {
-        self.delegate = delegate;
+        self.datasource = datasource;
     }
     return self;
 }
@@ -28,21 +28,25 @@
 #pragma mark Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    BOOL hasDeparturesOnWeekdays = [[self.delegate objectsInSection:SECTION_WEEKDAYS] count] > 0;
-    BOOL hasDeparturesOnSaturdays = [[self.delegate objectsInSection:SECTION_SATURDAYS] count] > 0;
-    BOOL hasDeparturesOnSundays = [[self.delegate objectsInSection:SECTION_SUNDAYS] count] > 0;
+    ARFRoute *route = [self.datasource route];
+    
+    BOOL hasDeparturesOnWeekdays = [[route departuresFromCalendar:WEEKDAYS] count] > 0;
+    BOOL hasDeparturesOnSaturdays = [[route departuresFromCalendar:SATURDAYS] count] > 0;
+    BOOL hasDeparturesOnSundays = [[route departuresFromCalendar:SUNDAYS] count] > 0;
     return hasDeparturesOnWeekdays + hasDeparturesOnSaturdays + hasDeparturesOnSundays;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.delegate objectsInSection:section] count];
+    ARFRoute *route = [self.datasource route];
+    return [[route departuresFromCalendar:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath:indexPath];
     
-    NSMutableArray *rows = [self.delegate objectsInSection:indexPath.section];
-    ARFDeparture *departure = [rows objectAtIndex:indexPath.row];
+    ARFRoute *route = [self.datasource route];
+    NSMutableArray *departures = [route departuresFromCalendar:indexPath.section];
+    ARFDeparture *departure = [departures objectAtIndex:indexPath.row];
     
     cell.textLabel.text = departure.time;
     return cell;
@@ -51,9 +55,9 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *title;
     switch (section) {
-        case SECTION_WEEKDAYS:  title = @"Weekdays";  break;
-        case SECTION_SATURDAYS: title = @"Saturdays"; break;
-        case SECTION_SUNDAYS:   title = @"Sundays";   break;
+        case WEEKDAYS:  title = @"Weekdays";  break;
+        case SATURDAYS: title = @"Saturdays"; break;
+        case SUNDAYS:   title = @"Sundays";   break;
     }
     return title;
 }

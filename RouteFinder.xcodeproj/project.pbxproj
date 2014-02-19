@@ -52,6 +52,7 @@
 		6A4613DA18B462C5005EED35 /* ARFStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFStop.m; sourceTree = "<group>"; };
 		6A4613DC18B464D9005EED35 /* ARFDeparture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFDeparture.h; sourceTree = "<group>"; };
 		6A4613DD18B464D9005EED35 /* ARFDeparture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFDeparture.m; sourceTree = "<group>"; };
+		6A4613E018B54CF7005EED35 /* ARFRouteDetailsTableDatasource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFRouteDetailsTableDatasource.h; sourceTree = "<group>"; };
 		6A61123018AC027B00DB77DB /* ARFPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFPostRequest.h; sourceTree = "<group>"; };
 		6A61123118AC027B00DB77DB /* ARFPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFPostRequest.m; sourceTree = "<group>"; };
 		6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFStopsDatasSource.h; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		6A5BC16718AD45B300CDAD91 /* Datasources */ = {
 			isa = PBXGroup;
 			children = (
+				6A4613E018B54CF7005EED35 /* ARFRouteDetailsTableDatasource.h */,
 				6A61123318AC856600DB77DB /* ARFStopsDatasSource.h */,
 				6A61123418AC856600DB77DB /* ARFStopsDatasSource.m */,
 				6A61123618AC962A00DB77DB /* ARFTimetableDataSource.h */,

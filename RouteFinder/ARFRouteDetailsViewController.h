@@ -8,27 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ARFPostRequest.h"
+#import "ARFRouteDetailsTableDatasource.h"
 #import "ARFRoute.h"
 
-@protocol ARFTableDatasourceDelegate <NSObject>
-@required
-- (NSMutableArray *)objectsInSection:(NSInteger)section;
-@optional
-- (NSMutableArray *)objects;
-@end
-
-
-@interface ARFRouteDetailsViewController : UIViewController <ARFPostRequestDelegate, ARFTableDatasourceDelegate>
+@interface ARFRouteDetailsViewController : UIViewController <ARFPostRequestDelegate, ARFRouteDetailsTableDatasource>
 
 @property (strong, nonatomic) ARFRoute *route;
-
-enum {
-    //Timetable
-    SECTION_WEEKDAYS,
-    SECTION_SATURDAYS,
-    SECTION_SUNDAYS,
-    //Stops
-    SECTION_STOPS,
-};
 
 @end

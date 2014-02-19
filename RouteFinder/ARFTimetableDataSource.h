@@ -12,6 +12,6 @@
 @interface ARFTimetableDataSource : NSObject <UITableViewDataSource>
 
 //Designated initializer
-- (instancetype)initWithDelegate:(id<ARFTableDatasourceDelegate>)delegate;
+- (instancetype)initWithDatasource:(id<ARFRouteDetailsTableDatasource>)datasource;
 
 @end

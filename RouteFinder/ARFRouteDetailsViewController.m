@@ -73,29 +73,6 @@ int const SEGMENT_TIMETABLE = 1;
     [self.tableView reloadData];
 }
 
-- (NSMutableArray *)objects {
-    return self.route.stops;
-}
-
-- (NSMutableArray *)objectsInSection:(NSInteger)section {
-    NSMutableArray *array;
-    switch (section) {
-        case SECTION_WEEKDAYS:
-            array = self.route.weekdayDepartures;
-            break;
-        case SECTION_SATURDAYS:
-            array = self.route.saturdayDepartures;
-            break;
-        case SECTION_SUNDAYS:
-            array = self.route.sundayDepartures;
-            break;
-        case SECTION_STOPS:
-            array = self.route.stops;
-            break;
-    }
-    return array;
-}
-
 #pragma mark - Protocols
 
 #pragma mark ARFPostRequestDelegate
@@ -160,8 +137,8 @@ int const SEGMENT_TIMETABLE = 1;
 
     self.postRequestHelper = [[ARFPostRequest alloc] init];
 
-    self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDelegate:self];
-    self.timetableDatasource = [[ARFTimetableDataSource alloc] initWithDelegate:self];
+    self.stopsDatasource = [[ARFStopsDatasSource alloc] initWithDatasource:self];
+    self.timetableDatasource = [[ARFTimetableDataSource alloc] initWithDatasource:self];
     
     self.tableView.dataSource = self.stopsDatasource;
 

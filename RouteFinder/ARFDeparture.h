@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    WEEKDAYS,
+    SATURDAYS,
+    SUNDAYS
+} CalendarType;
+
 @interface ARFDeparture : NSObject
 
 @property (nonatomic) NSInteger departureId;
